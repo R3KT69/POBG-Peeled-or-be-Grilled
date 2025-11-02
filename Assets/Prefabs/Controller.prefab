@@ -1481,6 +1481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 32772957523220341}
   - component: {fileID: -567393444404909407}
+  - component: {fileID: 4430263162849616063}
   - component: {fileID: 7646536471799345143}
   - component: {fileID: 5823048965013284536}
   - component: {fileID: 7072952586185253205}
@@ -1536,9 +1537,31 @@ MonoBehaviour:
   _networkRules: {fileID: 0}
   _visitiblityRules: {fileID: 0}
   textObject: {fileID: 7708349091457259025, guid: 5e9518ea1df23ad4eb7b0df747343448, type: 3}
-  inputField: {fileID: 0}
-  MsgBox: {fileID: 0}
-  playerProfile: {fileID: 0}
+--- !u!114 &4430263162849616063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8728282605487838366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a14e259a60051a499edaa5e226bae00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isSetup: 0
+  _prefabId: -2147483648
+  _componentIndex: -2147483648
+  _shouldBePooled: 0
+  _parent: {fileID: 0}
+  _invertedPathToNearestParent: 
+  _directChildren: []
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
+  shootPoint: {fileID: 9075218707990368598}
+  bulletProjLocal: {fileID: 7170118391190887908, guid: f160d814970305241a5e47a32abe52e2, type: 3}
+  bulletProjObserver: {fileID: 7170118391190887908, guid: 68b65852cef9e93499c7d4c07388a592, type: 3}
+  bulletSpeed: 50
 --- !u!114 &7646536471799345143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1602,6 +1625,8 @@ MonoBehaviour:
     _ownerAuth: 0
     _sendIntervalInSeconds: 0
   networkIdentity: {fileID: -6142990091270304418}
+  sendMsgNet: {fileID: 0}
+  networkDriver: {fileID: 0}
 --- !u!114 &7072952586185253205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1675,7 +1700,7 @@ CharacterController:
   m_Height: 1.35
   m_Radius: 0.5
   m_SlopeLimit: 45
-  m_StepOffset: 0.2
+  m_StepOffset: 0.3
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0.65, z: 0}

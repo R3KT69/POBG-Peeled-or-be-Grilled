@@ -1,36 +1,28 @@
 using PurrNet;
 using TMPro;
 using UnityEngine;
+using Steamworks;
 
 
 public class PlayerProfileNet : NetworkIdentity
 {
     public Color color;
     public TMP_Text health_text, name_text;
+    public string Player_Name;
     public Renderer rend;
     public SyncVar<int> health = new(initialValue: 100);
-    
+
     public NetworkIdentity networkIdentity;
+    public SendMsgNet sendMsgNet;
+    public NetworkDriver networkDriver;
+    
 
     private void Awake()
     {
         health.onChanged += OnHealthChanged;
         networkIdentity = GetComponent<NetworkIdentity>();
-    }
+        sendMsgNet = GetComponent<SendMsgNet>();
 
-    private void Start()
-    {
-        if (isOwner)
-        {
-            if (string.IsNullOrWhiteSpace(Connection_Menu.PlayerName))
-            {
-                SetPlayerNameServerRpc("Guest");
-            } else
-            {
-                SetPlayerNameServerRpc(Connection_Menu.PlayerName);
-            }
-            
-        }
     }
 
     protected override void OnDestroy()
@@ -43,7 +35,7 @@ public class PlayerProfileNet : NetworkIdentity
     private void OnHealthChanged(int newValue)
     {
         health_text.text = newValue.ToString();
-        Debug.Log($"Health : {newValue}");
+        //Debug.Log($"Health : {newValue}");
     }
 
     protected override void OnSpawned()
@@ -60,9 +52,43 @@ public class PlayerProfileNet : NetworkIdentity
         }
         else
         {
-            // This is the local player's camera
+            if (isOwner)
+            {
+                if (Connection_Menu.startMode == "Steam")
+                {
+                    Player_Name = SteamFriends.GetPersonaName();
+                }
+                else
+                {
+                    if (string.IsNullOrWhiteSpace(Connection_Menu.PlayerName))
+                    {
+                        Player_Name = "Guest";
+                    }
+                    else
+                    {
+                        Player_Name = Connection_Menu.PlayerName;
+                    }
+
+                }
+                
+                /*
+                if (string.IsNullOrWhiteSpace(Connection_Menu.PlayerName))
+                {
+                    SetPlayerNameServerRpc("Guest");
+                }
+                else
+                {
+                    SetPlayerNameServerRpc(Connection_Menu.PlayerName);
+                }*/
+                
+                SetPlayerNameServerRpc(Player_Name);
+
+            }
+            
             cam.gameObject.SetActive(true);
             cam.tag = "MainCamera";
+            sendMsgNet.SendToAll($"{Player_Name} joined the game!");
+            
         }
     }
 

@@ -6,10 +6,11 @@ using UnityEngine.UI;
 public class SendMsgNet : NetworkIdentity
 {
     public GameObject textObject;
-    public TMP_InputField inputField;
-    public Transform MsgBox;
+    private TMP_InputField inputField;
+    private Transform MsgBox;
     private string textToSend;
-    public PlayerProfileNet playerProfile;
+    private PlayerProfileNet playerProfile;
+    
 
     void Awake()
     {
@@ -24,16 +25,30 @@ public class SendMsgNet : NetworkIdentity
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            if (string.IsNullOrWhiteSpace(inputField.text)) return;
-
-            textToSend = $"[{playerProfile.networkIdentity.localPlayer.Value}] {playerProfile.name_text.text}: " + inputField.text;
-            SendToAll(textToSend);
-            inputField.text = null;
+            SendMessage();
         }
+
+    }
+
+    public void SendMessage()
+    {
+        if (string.IsNullOrWhiteSpace(inputField.text)) return;
+
+        textToSend = $"[{playerProfile.networkIdentity.localPlayer.Value}] {playerProfile.name_text.text}: " + inputField.text;
+        SendToAll(textToSend);
+        inputField.text = null;
+    }
+    
+    public void SendMessageServer(string Message)
+    {
+        inputField.text = Message;
+        textToSend = inputField.text;
+        SendToAll(textToSend);
+        inputField.text = null;
     }
 
     [ObserversRpc(bufferLast: true)]
-    void SendToAll(string message)
+    public void SendToAll(string message)
     {
         GameObject obj = Instantiate(textObject, MsgBox);
         obj.GetComponent<TextMeshProUGUI>().text = message;
