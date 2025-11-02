@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEditor;
 
 public class Connection_Menu : MonoBehaviour
 {
@@ -8,7 +9,8 @@ public class Connection_Menu : MonoBehaviour
     public static string PortAddr;
     public static string startMode;
     public static string PlayerName;
-    public string sceneName;
+    public string sceneNameWAN;
+    public string lobbyScene;
     public TextMeshProUGUI text;
 
     void Update()
@@ -22,14 +24,20 @@ public class Connection_Menu : MonoBehaviour
     public void Start_Srv_host()
     {
         startMode = "Host";
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneNameWAN);
     }
 
     public void Start_Srv_client()
     {
         startMode = "Client";
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneNameWAN);
     } 
+
+    public void Start_Lobby_Steam()
+    {
+        startMode = "Steam";
+        UnityEngine.SceneManagement.SceneManager.LoadScene(lobbyScene);
+    }
     
     public void SaveConnection()
     {
