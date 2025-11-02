@@ -7958,14 +7958,13 @@ GameObject:
   m_Component:
   - component: {fileID: 738658300}
   - component: {fileID: 738658301}
-  - component: {fileID: 738658302}
   m_Layer: 0
   m_Name: Starter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &738658300
 Transform:
   m_ObjectHideFlags: 0
@@ -7988,9 +7987,9 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 738658299}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12f1257c8cc2fdc45af6594d2eb2c8bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 60eabe0c87fc67643a35a8d2bacdb1ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isSetup: 0
@@ -8002,32 +8001,7 @@ MonoBehaviour:
   _directChildren: []
   _networkRules: {fileID: 0}
   _visitiblityRules: {fileID: 0}
-  port: 
-  networkmngr: {fileID: 1872449222}
-  transport: {fileID: 1872449221}
-  sendMsgNet: {fileID: 738658302}
---- !u!114 &738658302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 738658299}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b79742ab4323e7409814596bdd18101, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isSetup: 0
-  _prefabId: -2147483648
-  _componentIndex: -2147483648
-  _shouldBePooled: 0
-  _parent: {fileID: 0}
-  _invertedPathToNearestParent: 
-  _directChildren: []
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
-  textObject: {fileID: 7708349091457259025, guid: 5e9518ea1df23ad4eb7b0df747343448, type: 3}
+  transport: {fileID: 1872449224}
 --- !u!43 &778524101
 Mesh:
   m_ObjectHideFlags: 0
