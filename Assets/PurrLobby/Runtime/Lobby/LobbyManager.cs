@@ -438,7 +438,7 @@ namespace PurrLobby
             public int maxPlayers = 5;
             public SerializableDictionary<string, string> roomProperties = null;
         }
-        
+
         [System.Serializable]
         public enum FriendFilter
         {
@@ -446,5 +446,7 @@ namespace PurrLobby
             Online,
             All
         }
+        
+        
     }
 }

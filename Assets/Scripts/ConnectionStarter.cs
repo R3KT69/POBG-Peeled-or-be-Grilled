@@ -3,6 +3,10 @@ using PurrNet;
 using PurrNet.Logging;
 using PurrNet.Transports;
 using UnityEngine;
+using Steamworks;
+using PurrNet.Steam;
+
+
 
 #if UTP_LOBBYRELAY
 using PurrNet.UTP;
@@ -14,7 +18,9 @@ namespace PurrLobby
     public class ConnectionStarter : MonoBehaviour
     {
         private NetworkManager _networkManager;
+
         private LobbyDataHolder _lobbyDataHolder;
+        
         
         private void Awake()
         {
@@ -47,9 +53,16 @@ namespace PurrLobby
                 return;
             }
 
-            if(_networkManager.transport is PurrTransport) {
+            if (_networkManager.transport is PurrTransport)
+            {
                 (_networkManager.transport as PurrTransport).roomName = _lobbyDataHolder.CurrentLobby.LobbyId;
             } 
+
+             if (_networkManager.transport is SteamTransport)
+            {
+                (_networkManager.transport as SteamTransport).address = _lobbyDataHolder.CurrentLobby.Members[0].Id;
+            }
+           
             
 #if UTP_LOBBYRELAY
             else if(_networkManager.transport is UTPTransport) {
