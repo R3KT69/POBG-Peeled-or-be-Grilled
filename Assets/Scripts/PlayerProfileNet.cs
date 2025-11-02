@@ -1,12 +1,14 @@
 using PurrNet;
 using TMPro;
 using UnityEngine;
+using Steamworks;
 
 
 public class PlayerProfileNet : NetworkIdentity
 {
     public Color color;
     public TMP_Text health_text, name_text;
+    public string Player_Name;
     public Renderer rend;
     public SyncVar<int> health = new(initialValue: 100);
 
@@ -52,6 +54,24 @@ public class PlayerProfileNet : NetworkIdentity
         {
             if (isOwner)
             {
+                if (Connection_Menu.startMode == "Steam")
+                {
+                    Player_Name = SteamFriends.GetPersonaName();
+                }
+                else
+                {
+                    if (string.IsNullOrWhiteSpace(Connection_Menu.PlayerName))
+                    {
+                        Player_Name = "Guest";
+                    }
+                    else
+                    {
+                        Player_Name = Connection_Menu.PlayerName;
+                    }
+
+                }
+                
+                /*
                 if (string.IsNullOrWhiteSpace(Connection_Menu.PlayerName))
                 {
                     SetPlayerNameServerRpc("Guest");
@@ -59,13 +79,15 @@ public class PlayerProfileNet : NetworkIdentity
                 else
                 {
                     SetPlayerNameServerRpc(Connection_Menu.PlayerName);
-                }
+                }*/
+                
+                SetPlayerNameServerRpc(Player_Name);
 
             }
             
             cam.gameObject.SetActive(true);
             cam.tag = "MainCamera";
-            sendMsgNet.SendToAll($"{Connection_Menu.PlayerName} joined the game!");
+            sendMsgNet.SendToAll($"{Player_Name} joined the game!");
             
         }
     }
