@@ -8133,13 +8133,14 @@ GameObject:
   m_Component:
   - component: {fileID: 738658300}
   - component: {fileID: 738658301}
+  - component: {fileID: 738658302}
   m_Layer: 0
   m_Name: Starter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &738658300
 Transform:
   m_ObjectHideFlags: 0
@@ -8178,6 +8179,31 @@ MonoBehaviour:
   _visitiblityRules: {fileID: 0}
   transport: {fileID: 1872449224}
   lobbyManager: {fileID: 0}
+--- !u!114 &738658302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738658299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12f1257c8cc2fdc45af6594d2eb2c8bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isSetup: 0
+  _prefabId: -2147483648
+  _componentIndex: -2147483648
+  _shouldBePooled: 0
+  _parent: {fileID: 0}
+  _invertedPathToNearestParent: 
+  _directChildren: []
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
+  port: 
+  networkmngr: {fileID: 93041427}
+  transport: {fileID: 93041426}
+  sendMsgNet: {fileID: 0}
 --- !u!43 &778524101
 Mesh:
   m_ObjectHideFlags: 0
@@ -10050,8 +10076,8 @@ MonoBehaviour:
 
     Jump; SPACE
 
-    Swap
-    Shoulder; LAlt
+    Swap Shoulder;
+    LAlt
 
     Chatbox; TAB
 
