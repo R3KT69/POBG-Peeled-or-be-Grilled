@@ -14,10 +14,10 @@ TagManager:
   - Water
   - UI
   - Ground
-  - Jumpable
+  - Obstacle
   - Player
   - Projectile
-  - 
+  - Wall
   - 
   - 
   - 

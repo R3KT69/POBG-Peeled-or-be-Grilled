@@ -180,7 +180,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8041693206262949766, guid: 7a735af71b52b2246b2d7a074745482e, type: 2}
+  - {fileID: -2112724981512767912, guid: 59a93935bad40654c9be6f7abb45daee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -224,8 +224,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 100
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7a735af71b52b2246b2d7a074745482e, type: 2}
-  m_sharedMaterial: {fileID: 8041693206262949766, guid: 7a735af71b52b2246b2d7a074745482e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 59a93935bad40654c9be6f7abb45daee, type: 2}
+  m_sharedMaterial: {fileID: -2112724981512767912, guid: 59a93935bad40654c9be6f7abb45daee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 1446467261956496498}
   - component: {fileID: 1909982944033501761}
   m_Layer: 8
-  m_Name: Sphere
+  m_Name: alurenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -588,7 +588,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8041693206262949766, guid: 7a735af71b52b2246b2d7a074745482e, type: 2}
+  - {fileID: -2112724981512767912, guid: 59a93935bad40654c9be6f7abb45daee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -632,8 +632,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Player
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7a735af71b52b2246b2d7a074745482e, type: 2}
-  m_sharedMaterial: {fileID: 8041693206262949766, guid: 7a735af71b52b2246b2d7a074745482e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 59a93935bad40654c9be6f7abb45daee, type: 2}
+  m_sharedMaterial: {fileID: -2112724981512767912, guid: 59a93935bad40654c9be6f7abb45daee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -776,6 +776,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4189867580424712006}
   - component: {fileID: 4782513868274280472}
+  - component: {fileID: 1917406478627687722}
   - component: {fileID: 1431740485781349609}
   m_Layer: 8
   m_Name: player-camera
@@ -830,7 +831,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -850,6 +851,33 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1917406478627687722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3755058787888559867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ffb9779a2c5c7b43a1535dfd3ff753c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 5
+  mouseSensitivity: 2
+  minYAngle: -30
+  maxYAngle: 75
+  baseOffset: {x: 0, y: 1.5, z: 0}
+  orbitOffset: {x: 0, y: 0, z: 0}
+  aimingOffset: {x: 1, y: 0, z: 2}
+  bodyRotationSpeed: 0
+  aimingShoulderSnapSpeed: 10
+  offsetTransitionSpeed: 5
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 1152
+  cameraRadius: 0.3
+  collisionOffset: 0.2
 --- !u!114 &1431740485781349609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1304,7 +1332,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7229229691396484479}
-  - component: {fileID: 3653350372318721797}
   - component: {fileID: 4651177480601422831}
   m_Layer: 8
   m_Name: potato
@@ -1330,28 +1357,6 @@ Transform:
   - {fileID: 1446467261956496498}
   m_Father: {fileID: 32772957523220341}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &3653350372318721797
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8005344835388356549}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 7812105c38df7f5498f70d964f31d821, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!135 &4651177480601422831
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1481,6 +1486,7 @@ GameObject:
   m_Component:
   - component: {fileID: 32772957523220341}
   - component: {fileID: -567393444404909407}
+  - component: {fileID: -3648193982601232789}
   - component: {fileID: 4430263162849616063}
   - component: {fileID: 7646536471799345143}
   - component: {fileID: 5823048965013284536}
@@ -1537,6 +1543,36 @@ MonoBehaviour:
   _networkRules: {fileID: 0}
   _visitiblityRules: {fileID: 0}
   textObject: {fileID: 7708349091457259025, guid: 5e9518ea1df23ad4eb7b0df747343448, type: 3}
+--- !u!114 &-3648193982601232789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8728282605487838366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb92774acf35c6742b4675c77e6a86a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isSetup: 0
+  _prefabId: -2147483648
+  _componentIndex: -2147483648
+  _shouldBePooled: 0
+  _parent: {fileID: 0}
+  _invertedPathToNearestParent: 
+  _directChildren: []
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
+  userInventory:
+    CurrentWeapon: 
+    MagSize: 0
+    CurrentAmmo: 0
+    MaxAmmo: 0
+    range: 0
+    weaponIcon: {fileID: 0}
+  weaponData: {fileID: 11400000, guid: 574b18f67ed484448bb8043528fc5a72, type: 2}
+  sendMsgNet: {fileID: -567393444404909407}
 --- !u!114 &4430263162849616063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1561,6 +1597,9 @@ MonoBehaviour:
   shootPoint: {fileID: 9075218707990368598}
   bulletProjLocal: {fileID: 7170118391190887908, guid: f160d814970305241a5e47a32abe52e2, type: 3}
   bulletProjObserver: {fileID: 7170118391190887908, guid: 68b65852cef9e93499c7d4c07388a592, type: 3}
+  Inventory: {fileID: -3648193982601232789}
+  sendMsgNet: {fileID: -567393444404909407}
+  playerHud: {fileID: 0}
   bulletSpeed: 50
 --- !u!114 &7646536471799345143
 MonoBehaviour:
@@ -1587,7 +1626,9 @@ MonoBehaviour:
   jumpHeight: 1.5
   gravity: -14.715
   mouseSensi: 3
+  rotationSpeed: 8
   animator: {fileID: 0}
+  cameraTransform: {fileID: 4189867580424712006}
   velocityVector: {x: 0, y: 0, z: 0}
   feetTransformR: {fileID: 4897817717454536784}
   feetTransformL: {fileID: 3362291720282204826}
@@ -1619,6 +1660,7 @@ MonoBehaviour:
   color: {r: 0, g: 0, b: 0, a: 0}
   health_text: {fileID: 7443027575701553646}
   name_text: {fileID: 3577872915151985788}
+  Player_Name: 
   rend: {fileID: 0}
   health:
     _value: 100

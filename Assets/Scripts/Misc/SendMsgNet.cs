@@ -53,4 +53,10 @@ public class SendMsgNet : NetworkIdentity
         GameObject obj = Instantiate(textObject, MsgBox);
         obj.GetComponent<TextMeshProUGUI>().text = message;
     }
+
+    public void SendToLocal(string message)
+    {
+        GameObject obj = Instantiate(textObject, MsgBox);
+        obj.GetComponent<TextMeshProUGUI>().text = message;
+    }
 }
