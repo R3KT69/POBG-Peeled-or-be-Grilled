@@ -180,7 +180,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8041693206262949766, guid: 7a735af71b52b2246b2d7a074745482e, type: 2}
+  - {fileID: -2112724981512767912, guid: 59a93935bad40654c9be6f7abb45daee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -224,8 +224,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 100
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7a735af71b52b2246b2d7a074745482e, type: 2}
-  m_sharedMaterial: {fileID: 8041693206262949766, guid: 7a735af71b52b2246b2d7a074745482e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 59a93935bad40654c9be6f7abb45daee, type: 2}
+  m_sharedMaterial: {fileID: -2112724981512767912, guid: 59a93935bad40654c9be6f7abb45daee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -588,7 +588,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8041693206262949766, guid: 7a735af71b52b2246b2d7a074745482e, type: 2}
+  - {fileID: -2112724981512767912, guid: 59a93935bad40654c9be6f7abb45daee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -632,8 +632,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Player
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7a735af71b52b2246b2d7a074745482e, type: 2}
-  m_sharedMaterial: {fileID: 8041693206262949766, guid: 7a735af71b52b2246b2d7a074745482e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 59a93935bad40654c9be6f7abb45daee, type: 2}
+  m_sharedMaterial: {fileID: -2112724981512767912, guid: 59a93935bad40654c9be6f7abb45daee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -776,6 +776,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4189867580424712006}
   - component: {fileID: 4782513868274280472}
+  - component: {fileID: 1917406478627687722}
   - component: {fileID: 1431740485781349609}
   m_Layer: 8
   m_Name: player-camera
@@ -850,6 +851,33 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1917406478627687722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3755058787888559867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ffb9779a2c5c7b43a1535dfd3ff753c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 5
+  mouseSensitivity: 2
+  minYAngle: -30
+  maxYAngle: 75
+  baseOffset: {x: 0, y: 1.5, z: 0}
+  orbitOffset: {x: 0, y: 0, z: 0}
+  aimingOffset: {x: 0.5, y: 0, z: 1}
+  bodyRotationSpeed: 0
+  aimingShoulderSnapSpeed: 50
+  offsetTransitionSpeed: 5
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 1216
+  cameraRadius: 0.3
+  collisionOffset: 0.2
 --- !u!114 &1431740485781349609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1559,6 +1587,7 @@ MonoBehaviour:
   _directChildren: []
   _networkRules: {fileID: 0}
   _visitiblityRules: {fileID: 0}
+  weaponData: {fileID: 11400000, guid: 574b18f67ed484448bb8043528fc5a72, type: 2}
   sendMsgNet: {fileID: -567393444404909407}
 --- !u!114 &4430263162849616063
 MonoBehaviour:
@@ -1613,7 +1642,9 @@ MonoBehaviour:
   jumpHeight: 1.5
   gravity: -14.715
   mouseSensi: 3
-  animator: {fileID: 0}
+  rotationSpeed: 8
+  animator: {fileID: 3653350372318721797}
+  cameraTransform: {fileID: 4189867580424712006}
   velocityVector: {x: 0, y: 0, z: 0}
   feetTransformR: {fileID: 4897817717454536784}
   feetTransformL: {fileID: 3362291720282204826}

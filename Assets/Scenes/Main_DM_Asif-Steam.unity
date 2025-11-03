@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 49614737}
   - component: {fileID: 49614736}
   - component: {fileID: 49614735}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arch (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3327,7 +3327,7 @@ GameObject:
   - component: {fileID: 277911935}
   - component: {fileID: 277911934}
   - component: {fileID: 277911933}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3844,7 +3844,7 @@ GameObject:
   - component: {fileID: 373772449}
   - component: {fileID: 373772448}
   - component: {fileID: 373772447}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12349,7 +12349,7 @@ GameObject:
   - component: {fileID: 1137187450}
   - component: {fileID: 1137187449}
   - component: {fileID: 1137187448}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arch
   m_TagString: Untagged
   m_Icon: {fileID: 0}

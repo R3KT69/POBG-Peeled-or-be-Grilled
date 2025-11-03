@@ -9,7 +9,10 @@ public class PlayerMovementNet : NetworkIdentity
     public float jumpHeight = 1.8f;
     public float gravity = -30f;
     public float mouseSensi = 1f;
+    public float rotationSpeed = 8f;
+    private float yaw;
     public Animator animator; // assign your Animator here
+    public Transform cameraTransform;
 
     private TMP_InputField inputField;
     private CharacterController characterController;
@@ -31,10 +34,12 @@ public class PlayerMovementNet : NetworkIdentity
 
     void Start()
     {
+        if (!isOwner) return;
         inputField = GameObject.Find("Input")?.GetComponent<TMP_InputField>();
         characterController = GetComponent<CharacterController>();
+        cameraTransform = gameObject.GetComponentInChildren<Camera>().transform;
         animator = GetComponentInChildren<Animator>();
-
+        yaw = transform.eulerAngles.y;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -42,7 +47,8 @@ public class PlayerMovementNet : NetworkIdentity
     {
         if (!isOwner) return;
 
-
+        //HandleMouseRotation();
+        
         //if (inputField != null && inputField.isFocused) return;
 
         if (Input.GetMouseButtonDown(1))
@@ -57,14 +63,14 @@ public class PlayerMovementNet : NetworkIdentity
 
         GroundCheck();
         Gravity();
+        RotatePlayerTowardCamera();
         Movement(out moveHorizontal, out moveVertical);
 
         // Jump
         if (Input.GetButtonDown("Jump") && isGrounded) velocityVector.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
         // Mouse rotation
-        float mouseHorizontal = Input.GetAxis("Mouse X") * mouseSensi;
-        transform.Rotate(0f, mouseHorizontal, 0f);
+        
 
         // Animation Part
         float inputMagnitude = new Vector2(moveHorizontal, moveVertical).magnitude;
@@ -115,7 +121,7 @@ public class PlayerMovementNet : NetworkIdentity
             velocityVector.y += gravity * Time.deltaTime;
         }
     }
-    
+
     void OnDrawGizmos()
     {
         bool grounded = GroundCheckDriver(feetTransformR, feetTransformL, sphereRadius, groundMask);
@@ -127,5 +133,27 @@ public class PlayerMovementNet : NetworkIdentity
         if (feetTransformL == null) return;
         Gizmos.color = grounded ? Color.green : Color.red;
         Gizmos.DrawWireSphere(feetTransformL.position, sphereRadius);
+    }
+
+    private void HandleMouseRotation()
+    {
+        yaw += Input.GetAxis("Mouse X") * mouseSensi;
+        transform.rotation = Quaternion.Euler(0f, yaw, 0f);
+    }
+    
+    public void RotatePlayerTowardCamera()
+    {
+        Vector3 inputDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+
+        if (inputDir.sqrMagnitude > 0.01f)
+        {
+            // Camera-relative direction
+            Vector3 camForward = cameraTransform.forward;
+            camForward.y = 0;
+            camForward.Normalize();
+
+            Quaternion targetRotation = Quaternion.LookRotation(camForward);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
     }
 }

@@ -18,6 +18,7 @@ public class PlayerShootingNet : NetworkIdentity
         sendMsgNet = GetComponent<SendMsgNet>();
         playerHud = GameObject.Find("PlayerHud").GetComponent<PlayerHud>();
         playerHud.weaponName.text = $"{Inventory.userInventory.CurrentWeapon}";
+        playerHud.weaponimage.sprite = Inventory.userInventory.weaponIcon;
         UpdateAmmo();
     }
 
@@ -39,18 +40,15 @@ public class PlayerShootingNet : NetworkIdentity
             }
 
         }
-        
+
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (Inventory.userInventory.CurrentAmmo < Inventory.userInventory.MaxAmmo)
-            {
-                int temp = Inventory.userInventory.MagSize - Inventory.userInventory.CurrentAmmo;
-                Inventory.userInventory.MaxAmmo -= temp;
-                Inventory.userInventory.CurrentAmmo = 5;
-                UpdateAmmo();
-            }
+            ReloadAction();
         }
+
     }
+    
+
     
     
 
@@ -71,7 +69,7 @@ public class PlayerShootingNet : NetworkIdentity
 
         if (bullet.TryGetComponent(out Rigidbody rb))
         {
-            rb.linearVelocity = shootPoint.forward * bulletSpeed;
+            rb.linearVelocity = shootPoint.forward * Inventory.userInventory.range;
         }
 
         Inventory.userInventory.CurrentAmmo -= 1;
@@ -82,5 +80,17 @@ public class PlayerShootingNet : NetworkIdentity
     {
         playerHud.weaponAmmoStatus.text = $"{Inventory.userInventory.CurrentAmmo}/{Inventory.userInventory.MaxAmmo}";
     }
+    
+    void ReloadAction()
+    {
+        int neededAmmo = Inventory.userInventory.MagSize - Inventory.userInventory.CurrentAmmo; // bullets needed to fill mag
+        if (neededAmmo <= 0 || Inventory.userInventory.MaxAmmo <= 0) return; // nothing to reload
 
+        int ammoToLoad = Mathf.Min(neededAmmo, Inventory.userInventory.MaxAmmo);
+
+        Inventory.userInventory.CurrentAmmo += ammoToLoad;
+        Inventory.userInventory.MaxAmmo -= ammoToLoad;
+
+        UpdateAmmo();
+    }
 }

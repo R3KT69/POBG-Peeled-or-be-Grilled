@@ -2,17 +2,21 @@ using System.Collections;
 using PurrNet;
 using UnityEngine;
 
+[System.Serializable]
 public struct Inventory
 {
     public string CurrentWeapon;
     public int MagSize;
     public int CurrentAmmo;
     public int MaxAmmo;
+    public float range;
+    public Sprite weaponIcon;
 }
 
 public class PlayerInventoryNet : NetworkIdentity
 {
     public Inventory userInventory;
+    public WeaponData weaponData;
     public SendMsgNet sendMsgNet;
 
     void Start()
@@ -26,10 +30,12 @@ public class PlayerInventoryNet : NetworkIdentity
         base.OnSpawned();
         if (!isOwner) return;
 
-        userInventory.CurrentWeapon = "PotatoCanon";
-        userInventory.MagSize = 5;
-        userInventory.CurrentAmmo = 5;
-        userInventory.MaxAmmo = 25;
+        userInventory.CurrentWeapon = weaponData.name;
+        userInventory.MagSize = weaponData.magSize;
+        userInventory.CurrentAmmo = weaponData.magSize; // Player spawns with 100% ammo
+        userInventory.MaxAmmo = weaponData.maxAmmo;
+        userInventory.weaponIcon = weaponData.weaponSprite;
+        userInventory.range = weaponData.range;
     }
     
     IEnumerator SendEverySec()
