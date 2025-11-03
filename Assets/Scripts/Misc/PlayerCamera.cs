@@ -107,15 +107,19 @@ public class PlayerCamera : MonoBehaviour
         Vector3 desiredCameraPos = playerTransform.position + baseOffset + currentShoulderOffset - camRotation * Vector3.forward * distance;
 
         // Wall collision prevention
-        Vector3 origin = playerTransform.position + baseOffset + currentShoulderOffset;
-        Vector3 dir = (desiredCameraPos - origin).normalized;
-        float maxDistance = distance;
+        Vector3 collisionOrigin = playerTransform.position + baseOffset;
+        Vector3 desiredDir = (desiredCameraPos - collisionOrigin).normalized;
+        float desiredDistance = (desiredCameraPos - collisionOrigin).magnitude;
 
-        if (Physics.SphereCast(origin, cameraRadius, dir, out RaycastHit hit, distance, collisionMask))
+        if (Physics.SphereCast(collisionOrigin, cameraRadius, desiredDir, out RaycastHit hit, desiredDistance, collisionMask))
         {
             float hitDistance = Mathf.Max(hit.distance - collisionOffset, 0.1f);
-            desiredCameraPos = origin + dir * hitDistance;
+            desiredCameraPos = collisionOrigin + desiredDir * hitDistance;
         }
+
+        // Finally, apply shoulder offset after collision adjustment
+        desiredCameraPos += currentShoulderOffset;
+
 
        
         transform.position = desiredCameraPos;

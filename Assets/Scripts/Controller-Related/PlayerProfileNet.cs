@@ -9,7 +9,6 @@ public class PlayerProfileNet : NetworkIdentity
     public Color color;
     public TMP_Text health_text, name_text;
     public string Player_Name;
-    public Renderer rend;
     public SyncVar<int> health = new(initialValue: 100);
 
     public NetworkIdentity networkIdentity;
@@ -98,12 +97,6 @@ public class PlayerProfileNet : NetworkIdentity
     {
         /*-----------Client Specific Codes-----------*/
         if (!isOwner) return;
-        
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            color = new Color(Random.value, Random.value, Random.value);
-            SetColor(color);
-        }
 
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -125,14 +118,6 @@ public class PlayerProfileNet : NetworkIdentity
             TargetExample(clientId, "Sent from Server");
         }*/
         
-    }
-
-
-    [ObserversRpc(bufferLast: true)]
-    private void SetColor(Color newColor)
-    {
-        color = newColor;
-        rend.material.color = color;
     }
 
     [ServerRpc]
