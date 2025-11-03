@@ -734,7 +734,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &93041425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10050,8 +10050,8 @@ MonoBehaviour:
 
     Jump; SPACE
 
-    Swap Shoulder;
-    LAlt
+    Swap
+    Shoulder; LAlt
 
     Chatbox; TAB
 
@@ -16761,7 +16761,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1872449220
 Transform:
   m_ObjectHideFlags: 0
