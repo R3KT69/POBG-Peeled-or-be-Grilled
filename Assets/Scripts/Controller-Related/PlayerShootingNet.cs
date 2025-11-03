@@ -1,5 +1,6 @@
 using UnityEngine;
 using PurrNet;
+using System.Collections;
 
 public class PlayerShootingNet : NetworkIdentity
 {
@@ -8,7 +9,9 @@ public class PlayerShootingNet : NetworkIdentity
     public PlayerInventoryNet Inventory;
     public SendMsgNet sendMsgNet;
     public PlayerHud playerHud;
-    public float bulletSpeed = 25f;
+    public GameObject reloadIndicator;
+    public float reloadTime = 10f; // seconds
+    private bool canShoot = true;
 
     void Start()
     {
@@ -17,6 +20,8 @@ public class PlayerShootingNet : NetworkIdentity
         Inventory = GetComponent<PlayerInventoryNet>();
         sendMsgNet = GetComponent<SendMsgNet>();
         playerHud = GameObject.Find("PlayerHud").GetComponent<PlayerHud>();
+        reloadIndicator = GameObject.Find("Reload");
+        reloadIndicator.SetActive(false);
         playerHud.weaponName.text = $"{Inventory.userInventory.CurrentWeapon}";
         playerHud.weaponimage.sprite = Inventory.userInventory.weaponIcon;
         UpdateAmmo();
@@ -27,7 +32,10 @@ public class PlayerShootingNet : NetworkIdentity
         // Only the local player should trigger shooting input
         if (!isOwner) return;
 
-        if (Input.GetMouseButtonDown(0)) // Left click
+        if (Input.GetKeyDown(KeyCode.B))
+            Debug.Log($"TimeScale = {Time.timeScale}");
+
+        if (Input.GetMouseButtonDown(0) && canShoot) // Left click
         {
             if (Inventory.userInventory.CurrentAmmo > 0)
             {
@@ -41,11 +49,17 @@ public class PlayerShootingNet : NetworkIdentity
 
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && canShoot)
         {
-            ReloadAction();
+
+            StartCoroutine(Reload());
         }
 
+    }
+    
+    void OnGUI()
+    {
+        GUI.Label(new Rect(10, 10, 200, 20), $"FPS: {(1f / Time.unscaledDeltaTime):F0}");
     }
     
     
@@ -57,7 +71,7 @@ public class PlayerShootingNet : NetworkIdentity
 
         if (bullet.TryGetComponent(out Rigidbody rb))
         {
-            rb.linearVelocity = shootPoint.forward * bulletSpeed;
+            rb.linearVelocity = shootPoint.forward * Inventory.userInventory.range;
         }
     }
 
@@ -91,4 +105,28 @@ public class PlayerShootingNet : NetworkIdentity
 
         UpdateAmmo();
     }
+
+
+    private bool isReloading = false;
+
+    IEnumerator Reload()
+    {
+        if (!isOwner || isReloading) yield break;
+
+        isReloading = true;
+        canShoot = false;
+
+        reloadIndicator.SetActive(true);
+
+        yield return new WaitForSecondsRealtime(reloadTime);
+
+        ReloadAction();
+
+        reloadIndicator.SetActive(false);
+        canShoot = true;
+        isReloading = false;
+    }
+
+
+
 }

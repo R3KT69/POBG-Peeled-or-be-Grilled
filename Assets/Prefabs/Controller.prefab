@@ -863,13 +863,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ffb9779a2c5c7b43a1535dfd3ff753c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 5
+  distance: 4
   mouseSensitivity: 2
   minYAngle: -30
   maxYAngle: 75
-  baseOffset: {x: 0, y: 1.5, z: 0}
+  baseOffset: {x: 0, y: 2, z: 0}
   orbitOffset: {x: 0, y: 0, z: 0}
-  aimingOffset: {x: 1, y: 0, z: 2}
+  aimingOffset: {x: 0.7, y: -0.25, z: 1}
   bodyRotationSpeed: 0
   aimingShoulderSnapSpeed: 10
   offsetTransitionSpeed: 5
@@ -1614,7 +1614,8 @@ MonoBehaviour:
   Inventory: {fileID: -3648193982601232789}
   sendMsgNet: {fileID: -567393444404909407}
   playerHud: {fileID: 0}
-  bulletSpeed: 50
+  reloadIndicator: {fileID: 0}
+  reloadTime: 2
 --- !u!114 &7646536471799345143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1675,7 +1676,6 @@ MonoBehaviour:
   health_text: {fileID: 7443027575701553646}
   name_text: {fileID: 3577872915151985788}
   Player_Name: 
-  rend: {fileID: 0}
   health:
     _value: 100
     _ownerAuth: 0
@@ -1755,7 +1755,7 @@ CharacterController:
   serializedVersion: 3
   m_Height: 1.35
   m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_SlopeLimit: 60
   m_StepOffset: 0.3
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0
