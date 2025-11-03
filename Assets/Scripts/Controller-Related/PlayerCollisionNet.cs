@@ -5,13 +5,15 @@ public class PlayerCollisionNet : NetworkIdentity
 {
     private PlayerProfileNet playerProfile;
 
-    void Awake()
+    void Start()
     {
         playerProfile = GetComponent<PlayerProfileNet>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!isServer) return;
+        
         if (other.CompareTag("Traps"))
         {
             Debug.Log($"Player {playerProfile.name_text.text} entered trap:  {other.gameObject.name}");
@@ -20,9 +22,11 @@ public class PlayerCollisionNet : NetworkIdentity
 
         if (other.CompareTag("Bullet"))
         {
-            Debug.Log($"Player {playerProfile.name_text.text} got hit by {other.gameObject.name}");
+
+            Debug.Log($"Player {playerProfile.name_text.text} got hit by {other.name}");
             playerProfile.TakeDamage(10);
         }
+
     }
     
     

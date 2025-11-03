@@ -28,7 +28,7 @@ public class PlayerInventoryNet : NetworkIdentity
     protected override void OnSpawned()
     {
         base.OnSpawned();
-        if (!isOwner) return;
+        
 
         userInventory.CurrentWeapon = weaponData.name;
         userInventory.MagSize = weaponData.magSize;

@@ -1642,7 +1642,7 @@ MonoBehaviour:
   gravity: -14.715
   mouseSensi: 3
   rotationSpeed: 8
-  animator: {fileID: 0}
+  animator: {fileID: -7243015798772468869}
   cameraTransform: {fileID: 4189867580424712006}
   velocityVector: {x: 0, y: 0, z: 0}
   feetTransformR: {fileID: 4897817717454536784}
@@ -1682,7 +1682,6 @@ MonoBehaviour:
     _sendIntervalInSeconds: 0
   networkIdentity: {fileID: -6142990091270304418}
   sendMsgNet: {fileID: 0}
-  networkDriver: {fileID: 0}
 --- !u!114 &7072952586185253205
 MonoBehaviour:
   m_ObjectHideFlags: 0

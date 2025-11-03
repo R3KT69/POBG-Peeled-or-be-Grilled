@@ -13,7 +13,6 @@ public class PlayerProfileNet : NetworkIdentity
 
     public NetworkIdentity networkIdentity;
     public SendMsgNet sendMsgNet;
-    public NetworkDriver networkDriver;
     
 
     private void Awake()
@@ -85,7 +84,7 @@ public class PlayerProfileNet : NetworkIdentity
                     SetPlayerNameServerRpc(Connection_Menu.PlayerName);
                 }*/
                 
-                SetPlayerNameServerRpc(Player_Name);
+                SetPlayerName(Player_Name);
 
             }
             
@@ -134,7 +133,7 @@ public class PlayerProfileNet : NetworkIdentity
     }
 
     [ObserversRpc(bufferLast: true)]
-    private void SetPlayerNameServerRpc(string name)
+    private void SetPlayerName(string name)
     {
         name_text.text = name;
     }
