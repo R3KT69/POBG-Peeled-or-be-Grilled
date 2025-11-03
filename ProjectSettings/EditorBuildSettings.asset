@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/LobbyScenes/PotatoLobby.unity
     guid: f0d027a8d3403d341aa437387eebd9bc
   - enabled: 1
+    path: Assets/Scenes/Main_DM_Asif-Steam 1.unity
+    guid: 5a39039bad646784982021cf400499de
+  - enabled: 1
     path: Assets/Scenes/Main_DM_Asif-Steam.unity
     guid: ab19d20e3414e5a48b48258c6ffbec89
   - enabled: 1
