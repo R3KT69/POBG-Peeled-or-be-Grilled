@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
+    /// <summary>
+    /// Camera script from ThirdPersonProject -r3kt
+    /// </summary>
+    
     [Header("Orbit Settings")]
     public float distance = 5f;
     public float mouseSensitivity = 2f;
@@ -71,14 +75,14 @@ public class PlayerCamera : MonoBehaviour
 
         Quaternion camRotation = Quaternion.Euler(yAngle, xAngle, 0f);
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetMouseButtonDown(1))
         {
             isAiming_ = !isAiming_;
         }
 
         bool isAiming = isAiming_;
 
-        // Smooth blend factor for aim transition
+        // Aim transition
         float targetBlend = isAiming ? 1f : 0f;
         aimBlend = Mathf.MoveTowards(aimBlend, targetBlend, Time.deltaTime * offsetTransitionSpeed);
 
@@ -92,8 +96,11 @@ public class PlayerCamera : MonoBehaviour
         // Rotate player while aiming
         if (isAiming)
         {
-            Quaternion targetRotation = Quaternion.Euler(0f, xAngle, 0f);
-            playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, targetRotation, Time.deltaTime * bodyRotationSpeed);
+            playerTransform.GetComponent<PlayerMovementNet>().RotatePlayerTowardCameraForced();
+
+            // These dont work for some reason, used to work in the old project
+            //Quaternion targetRotation = Quaternion.Euler(0f, xAngle, 0f); 
+            //playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, targetRotation, Time.deltaTime * bodyRotationSpeed);
         }
 
         // Base camera position behind player

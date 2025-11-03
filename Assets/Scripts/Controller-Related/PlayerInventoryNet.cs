@@ -22,7 +22,7 @@ public class PlayerInventoryNet : NetworkIdentity
     void Start()
     {
         if (!isOwner) return;
-        StartCoroutine(SendEverySec());
+        //StartCoroutine(SendEverySec());
     }
 
     protected override void OnSpawned()

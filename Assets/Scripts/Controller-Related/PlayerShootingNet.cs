@@ -48,8 +48,6 @@ public class PlayerShootingNet : NetworkIdentity
 
     }
     
-
-    
     
 
     [ServerRpc] // runs on the server
@@ -80,7 +78,7 @@ public class PlayerShootingNet : NetworkIdentity
     {
         playerHud.weaponAmmoStatus.text = $"{Inventory.userInventory.CurrentAmmo}/{Inventory.userInventory.MaxAmmo}";
     }
-    
+
     void ReloadAction()
     {
         int neededAmmo = Inventory.userInventory.MagSize - Inventory.userInventory.CurrentAmmo; // bullets needed to fill mag

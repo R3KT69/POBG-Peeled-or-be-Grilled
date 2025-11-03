@@ -51,7 +51,7 @@ public class PlayerMovementNet : NetworkIdentity
         
         //if (inputField != null && inputField.isFocused) return;
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(KeyCode.T))
         {
             cursorLocked = !cursorLocked;
             Cursor.lockState = cursorLocked ? CursorLockMode.Locked : CursorLockMode.None;
@@ -67,7 +67,7 @@ public class PlayerMovementNet : NetworkIdentity
         Movement(out moveHorizontal, out moveVertical);
 
         // Jump
-        if (Input.GetButtonDown("Jump") && isGrounded) velocityVector.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded) velocityVector.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
         // Mouse rotation
         
@@ -76,6 +76,11 @@ public class PlayerMovementNet : NetworkIdentity
         float inputMagnitude = new Vector2(moveHorizontal, moveVertical).magnitude;
         normalizedVelocity = Mathf.Clamp01(inputMagnitude); // 0 = idle, 1 = full input
         if (animator != null) animator.SetFloat("Velocity", normalizedVelocity);
+
+        float targetWeight = isGrounded ? 0f : 1f;
+        float currentWeight = animator.GetLayerWeight(2);
+        float newWeight = Mathf.Lerp(currentWeight, targetWeight, Time.deltaTime * 5);
+        animator.SetLayerWeight(2, newWeight);
     }
 
     bool GroundCheckDriver(Transform feetTransformR, Transform feetTransformL, float sphereRadius, LayerMask groundMask)
@@ -140,7 +145,7 @@ public class PlayerMovementNet : NetworkIdentity
         yaw += Input.GetAxis("Mouse X") * mouseSensi;
         transform.rotation = Quaternion.Euler(0f, yaw, 0f);
     }
-    
+
     public void RotatePlayerTowardCamera()
     {
         Vector3 inputDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -155,5 +160,15 @@ public class PlayerMovementNet : NetworkIdentity
             Quaternion targetRotation = Quaternion.LookRotation(camForward);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
+    }
+    
+    public void RotatePlayerTowardCameraForced()
+    {
+        Vector3 camForward = cameraTransform.forward;
+        camForward.y = 0;
+        camForward.Normalize();
+
+        Quaternion targetRotation = Quaternion.LookRotation(camForward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 }

@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 1446467261956496498}
   - component: {fileID: 1909982944033501761}
   m_Layer: 8
-  m_Name: Sphere
+  m_Name: alurenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -831,7 +831,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -869,13 +869,13 @@ MonoBehaviour:
   maxYAngle: 75
   baseOffset: {x: 0, y: 1.5, z: 0}
   orbitOffset: {x: 0, y: 0, z: 0}
-  aimingOffset: {x: 0.5, y: 0, z: 1}
+  aimingOffset: {x: 1, y: 0, z: 2}
   bodyRotationSpeed: 0
-  aimingShoulderSnapSpeed: 50
+  aimingShoulderSnapSpeed: 10
   offsetTransitionSpeed: 5
   collisionMask:
     serializedVersion: 2
-    m_Bits: 1216
+    m_Bits: 1152
   cameraRadius: 0.3
   collisionOffset: 0.2
 --- !u!114 &1431740485781349609
@@ -1332,7 +1332,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7229229691396484479}
-  - component: {fileID: 3653350372318721797}
   - component: {fileID: 4651177480601422831}
   m_Layer: 8
   m_Name: potato
@@ -1358,28 +1357,6 @@ Transform:
   - {fileID: 1446467261956496498}
   m_Father: {fileID: 32772957523220341}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &3653350372318721797
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8005344835388356549}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 7812105c38df7f5498f70d964f31d821, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!135 &4651177480601422831
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1587,6 +1564,13 @@ MonoBehaviour:
   _directChildren: []
   _networkRules: {fileID: 0}
   _visitiblityRules: {fileID: 0}
+  userInventory:
+    CurrentWeapon: 
+    MagSize: 0
+    CurrentAmmo: 0
+    MaxAmmo: 0
+    range: 0
+    weaponIcon: {fileID: 0}
   weaponData: {fileID: 11400000, guid: 574b18f67ed484448bb8043528fc5a72, type: 2}
   sendMsgNet: {fileID: -567393444404909407}
 --- !u!114 &4430263162849616063
@@ -1643,7 +1627,7 @@ MonoBehaviour:
   gravity: -14.715
   mouseSensi: 3
   rotationSpeed: 8
-  animator: {fileID: 3653350372318721797}
+  animator: {fileID: 0}
   cameraTransform: {fileID: 4189867580424712006}
   velocityVector: {x: 0, y: 0, z: 0}
   feetTransformR: {fileID: 4897817717454536784}

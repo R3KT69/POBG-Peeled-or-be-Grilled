@@ -5461,7 +5461,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 985841771}
   m_HandleRect: {fileID: 985841770}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -5820,7 +5820,7 @@ GameObject:
   - component: {fileID: 627390574}
   - component: {fileID: 627390573}
   - component: {fileID: 627390572}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Pipe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16348,7 +16348,7 @@ GameObject:
   - component: {fileID: 2016657531}
   - component: {fileID: 2016657530}
   - component: {fileID: 2016657529}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Pipe (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
