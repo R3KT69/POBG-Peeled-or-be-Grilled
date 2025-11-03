@@ -52,6 +52,11 @@ public class PlayerProfileNet : NetworkIdentity
         }
         else
         {
+            cam.gameObject.SetActive(true);
+            cam.tag = "MainCamera";
+            sendMsgNet.SendToAll($"{Player_Name} joined the game!");
+
+
             if (isOwner)
             {
                 if (Connection_Menu.startMode == "Steam")
@@ -84,10 +89,6 @@ public class PlayerProfileNet : NetworkIdentity
                 SetPlayerNameServerRpc(Player_Name);
 
             }
-            
-            cam.gameObject.SetActive(true);
-            cam.tag = "MainCamera";
-            sendMsgNet.SendToAll($"{Player_Name} joined the game!");
             
         }
     }

@@ -1481,6 +1481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 32772957523220341}
   - component: {fileID: -567393444404909407}
+  - component: {fileID: -3648193982601232789}
   - component: {fileID: 4430263162849616063}
   - component: {fileID: 7646536471799345143}
   - component: {fileID: 5823048965013284536}
@@ -1537,6 +1538,28 @@ MonoBehaviour:
   _networkRules: {fileID: 0}
   _visitiblityRules: {fileID: 0}
   textObject: {fileID: 7708349091457259025, guid: 5e9518ea1df23ad4eb7b0df747343448, type: 3}
+--- !u!114 &-3648193982601232789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8728282605487838366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb92774acf35c6742b4675c77e6a86a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isSetup: 0
+  _prefabId: -2147483648
+  _componentIndex: -2147483648
+  _shouldBePooled: 0
+  _parent: {fileID: 0}
+  _invertedPathToNearestParent: 
+  _directChildren: []
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
+  sendMsgNet: {fileID: -567393444404909407}
 --- !u!114 &4430263162849616063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1561,6 +1584,9 @@ MonoBehaviour:
   shootPoint: {fileID: 9075218707990368598}
   bulletProjLocal: {fileID: 7170118391190887908, guid: f160d814970305241a5e47a32abe52e2, type: 3}
   bulletProjObserver: {fileID: 7170118391190887908, guid: 68b65852cef9e93499c7d4c07388a592, type: 3}
+  Inventory: {fileID: -3648193982601232789}
+  sendMsgNet: {fileID: -567393444404909407}
+  playerHud: {fileID: 0}
   bulletSpeed: 50
 --- !u!114 &7646536471799345143
 MonoBehaviour:
@@ -1619,6 +1645,7 @@ MonoBehaviour:
   color: {r: 0, g: 0, b: 0, a: 0}
   health_text: {fileID: 7443027575701553646}
   name_text: {fileID: 3577872915151985788}
+  Player_Name: 
   rend: {fileID: 0}
   health:
     _value: 100
