@@ -5,14 +5,14 @@ public class PlayerCollisionNet : NetworkIdentity
 {
     private PlayerProfileNet playerProfile;
 
-    void Start()
+    void Awake()
     {
         playerProfile = GetComponent<PlayerProfileNet>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isServer) return;
+        if (!isServer) return; //Collisions are handled over server
         
         if (other.CompareTag("Traps"))
         {

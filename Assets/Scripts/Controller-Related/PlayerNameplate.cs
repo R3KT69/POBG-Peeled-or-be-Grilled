@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using PurrNet;
 
-public class PlayerNameplate : MonoBehaviour
+public class PlayerNameplate : NetworkIdentity
 {
     [Header("References")]
     public TMP_Text nameText;
@@ -13,6 +13,11 @@ public class PlayerNameplate : MonoBehaviour
 
     void Start()
     {
+        if (!isOwner)
+        {
+            return;
+        }
+        
         // Find the PlayerProfileNet on parent
         profile = GetComponentInParent<PlayerProfileNet>();
         if (profile == null)
@@ -53,11 +58,5 @@ public class PlayerNameplate : MonoBehaviour
         healthText.text = newHealth.ToString();
     }
 
-    private void OnDestroy()
-    {
-        if (profile != null)
-        {
-            profile.health.onChanged -= OnHealthChanged;
-        }
-    }
+    
 }

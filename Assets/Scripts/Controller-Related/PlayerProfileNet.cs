@@ -2,6 +2,7 @@ using PurrNet;
 using TMPro;
 using UnityEngine;
 using Steamworks;
+using PurrNet.Steam;
 
 
 public class PlayerProfileNet : NetworkIdentity
@@ -36,7 +37,7 @@ public class PlayerProfileNet : NetworkIdentity
         //Debug.Log($"Health : {newValue}");
     }
 
-    protected override void OnSpawned()
+    protected override void OnSpawned() // Runs both on server and all clients.
     {
         base.OnSpawned();
 
@@ -47,48 +48,29 @@ public class PlayerProfileNet : NetworkIdentity
         {
             cam.gameObject.SetActive(false);
             cam.tag = "Untagged";
+            return;
         }
-        else
+
+        // Local object
+        if (string.IsNullOrWhiteSpace(Connection_Menu.startMode))
         {
             cam.gameObject.SetActive(true);
             cam.tag = "MainCamera";
+            Player_Name = SteamFriends.GetPersonaName();
+            SetPlayerName(Player_Name);
+            Debug.Log($"Connected: {Player_Name}");
             sendMsgNet.SendToAll($"{Player_Name} joined the game!");
-
-
-            if (isOwner)
-            {
-                if (Connection_Menu.startMode == "Steam")
-                {
-                    Player_Name = SteamFriends.GetPersonaName();
-                }
-                else
-                {
-                    if (string.IsNullOrWhiteSpace(Connection_Menu.PlayerName))
-                    {
-                        Player_Name = "Guest";
-                    }
-                    else
-                    {
-                        Player_Name = Connection_Menu.PlayerName;
-                    }
-
-                }
-                
-                /*
-                if (string.IsNullOrWhiteSpace(Connection_Menu.PlayerName))
-                {
-                    SetPlayerNameServerRpc("Guest");
-                }
-                else
-                {
-                    SetPlayerNameServerRpc(Connection_Menu.PlayerName);
-                }*/
-                
-                SetPlayerName(Player_Name);
-
-            }
-            
         }
+        
+    }
+
+    void Start()
+    {
+        /*
+        Player_Name = SteamFriends.GetPersonaName();
+        SetPlayerName(Player_Name);
+        Debug.Log($"Connected: {Player_Name}");
+        sendMsgNet.SendToAll($"{Player_Name} joined the game!");*/
     }
 
 

@@ -19,12 +19,18 @@ public class PlayerInventoryNet : NetworkIdentity
     public WeaponData weaponData;
     public SendMsgNet sendMsgNet;
 
-    void Start()
+
+    void Awake()
     {
-        if (!isOwner) return;
-        //StartCoroutine(SendEverySec());
+        userInventory.CurrentWeapon = weaponData.name;
+        userInventory.MagSize = weaponData.magSize;
+        userInventory.CurrentAmmo = weaponData.magSize; // Player spawns with 100% ammo
+        userInventory.MaxAmmo = weaponData.maxAmmo;
+        userInventory.weaponIcon = weaponData.weaponSprite;
+        userInventory.range = weaponData.range;
     }
 
+    /*
     protected override void OnSpawned()
     {
         base.OnSpawned();
@@ -36,7 +42,7 @@ public class PlayerInventoryNet : NetworkIdentity
         userInventory.MaxAmmo = weaponData.maxAmmo;
         userInventory.weaponIcon = weaponData.weaponSprite;
         userInventory.range = weaponData.range;
-    }
+    }*/
     
     IEnumerator SendEverySec()
     {

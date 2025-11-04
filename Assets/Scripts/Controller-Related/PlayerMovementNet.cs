@@ -32,9 +32,8 @@ public class PlayerMovementNet : NetworkIdentity
     private bool cursorLocked = true;
     public SyncVar<bool> isGrounded_network = new(initialValue: true);
 
-    void Start()
+    void Awake()
     {
-        if (!isOwner) return;
         inputField = GameObject.Find("Input")?.GetComponent<TMP_InputField>();
         characterController = GetComponent<CharacterController>();
         cameraTransform = gameObject.GetComponentInChildren<Camera>().transform;

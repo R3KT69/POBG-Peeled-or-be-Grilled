@@ -14,6 +14,22 @@ public class PlayerShootingNet : NetworkIdentity
     public float reloadTime = 10f; // seconds
     private bool canShoot = true;
 
+    void Awake()
+    {
+        Inventory = GetComponent<PlayerInventoryNet>();
+        playerProfileNet = GetComponent<PlayerProfileNet>();
+        sendMsgNet = GetComponent<SendMsgNet>();
+
+        // Truely Local, uses scene UI
+        playerHud = GameObject.Find("PlayerHud").GetComponent<PlayerHud>();
+        reloadIndicator = GameObject.Find("Reload");
+        reloadIndicator.SetActive(false);
+        playerHud.weaponName.text = $"{Inventory.userInventory.CurrentWeapon}";
+        playerHud.weaponimage.sprite = Inventory.userInventory.weaponIcon;
+        UpdateAmmo();
+    }
+
+    /*
     void Start()
     {
         
@@ -30,7 +46,7 @@ public class PlayerShootingNet : NetworkIdentity
         playerHud.weaponName.text = $"{Inventory.userInventory.CurrentWeapon}";
         playerHud.weaponimage.sprite = Inventory.userInventory.weaponIcon;
         UpdateAmmo();
-    }
+    }*/
 
     void Update()
     {
