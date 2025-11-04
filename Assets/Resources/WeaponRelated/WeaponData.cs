@@ -9,4 +9,5 @@ public class WeaponData : ScriptableObject
     public float range;
     public int magSize;
     public int maxAmmo;
+    public AudioClip fireSound;
 }

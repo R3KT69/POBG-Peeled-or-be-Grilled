@@ -18,3 +18,4 @@ MonoBehaviour:
   range: 50
   magSize: 10
   maxAmmo: 50
+  fireSound: {fileID: 8300000, guid: c23bfffb28a358a49851d0d32e41e95f, type: 3}

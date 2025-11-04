@@ -16,19 +16,29 @@ public struct Inventory
 public class PlayerInventoryNet : NetworkIdentity
 {
     public Inventory userInventory;
-    public WeaponData weaponData;
     public SendMsgNet sendMsgNet;
 
+    public Weapon currentWeapon;
 
     void Awake()
     {
+        if (currentWeapon == null || currentWeapon.weaponData == null)
+        {
+            Debug.LogError("Weapon or WeaponData not assigned!");
+            enabled = false;
+            return;
+        }
+
+        WeaponData weaponData = currentWeapon.weaponData;
         userInventory.CurrentWeapon = weaponData.name;
         userInventory.MagSize = weaponData.magSize;
-        userInventory.CurrentAmmo = weaponData.magSize; // Player spawns with 100% ammo
+        userInventory.CurrentAmmo = weaponData.magSize; 
         userInventory.MaxAmmo = weaponData.maxAmmo;
         userInventory.weaponIcon = weaponData.weaponSprite;
         userInventory.range = weaponData.range;
     }
+
+
 
     /*
     protected override void OnSpawned()

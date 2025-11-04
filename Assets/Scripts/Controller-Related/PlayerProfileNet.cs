@@ -13,6 +13,7 @@ public class PlayerProfileNet : NetworkIdentity
     public SyncVar<int> health = new(initialValue: 100);
 
     public NetworkIdentity networkIdentity;
+    public NetworkManager networkManager;
     public SendMsgNet sendMsgNet;
     
 
@@ -21,6 +22,7 @@ public class PlayerProfileNet : NetworkIdentity
         health.onChanged += OnHealthChanged;
         networkIdentity = GetComponent<NetworkIdentity>();
         sendMsgNet = GetComponent<SendMsgNet>();
+        networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
 
     }
 
@@ -50,13 +52,20 @@ public class PlayerProfileNet : NetworkIdentity
             cam.tag = "Untagged";
             return;
         }
+        cam.gameObject.SetActive(true);
+        cam.tag = "MainCamera";
 
-        // Local object
-        if (string.IsNullOrWhiteSpace(Connection_Menu.startMode))
+        if (networkManager.transport is SteamTransport)
         {
-            cam.gameObject.SetActive(true);
-            cam.tag = "MainCamera";
             Player_Name = SteamFriends.GetPersonaName();
+            SetPlayerName(Player_Name);
+            Debug.Log($"Connected: {Player_Name}");
+            sendMsgNet.SendToAll($"{Player_Name} joined the game!");
+        }
+        // Local object
+        else
+        {
+            Player_Name = "Guest";
             SetPlayerName(Player_Name);
             Debug.Log($"Connected: {Player_Name}");
             sendMsgNet.SendToAll($"{Player_Name} joined the game!");

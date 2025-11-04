@@ -11,6 +11,7 @@ public class PlayerShootingNet : NetworkIdentity
     public SendMsgNet sendMsgNet;
     public PlayerHud playerHud;
     public GameObject reloadIndicator;
+    public GameObject target;
     public float reloadTime = 10f; // seconds
     private bool canShoot = true;
 
@@ -20,7 +21,22 @@ public class PlayerShootingNet : NetworkIdentity
         playerProfileNet = GetComponent<PlayerProfileNet>();
         sendMsgNet = GetComponent<SendMsgNet>();
 
-        // Truely Local, uses scene UI
+        /*/ Truely Local, uses scene UI
+        playerHud = GameObject.Find("PlayerHud").GetComponent<PlayerHud>();
+        reloadIndicator = GameObject.Find("Reload");
+        reloadIndicator.SetActive(false);
+        playerHud.weaponName.text = $"{Inventory.userInventory.CurrentWeapon}";
+        playerHud.weaponimage.sprite = Inventory.userInventory.weaponIcon;
+        UpdateAmmo();*/
+    }
+
+    void Start()
+    {
+        if (!isOwner)
+        {
+            target.SetActive(false);
+            return;
+        }
         playerHud = GameObject.Find("PlayerHud").GetComponent<PlayerHud>();
         reloadIndicator = GameObject.Find("Reload");
         reloadIndicator.SetActive(false);
@@ -62,6 +78,8 @@ public class PlayerShootingNet : NetworkIdentity
             {
                 ShootBullet_ServerRpc(Inventory.userInventory.range);
                 ShootBullet_Local();
+                Inventory.currentWeapon.FireWeaponVisual();
+                Inventory.currentWeapon.PlayerWepSound();
             }
             else
             {
@@ -112,7 +130,7 @@ public class PlayerShootingNet : NetworkIdentity
         UpdateAmmo();
     }
 
-    void UpdateAmmo()
+    public void UpdateAmmo()
     {
         playerHud.weaponAmmoStatus.text = $"{Inventory.userInventory.CurrentAmmo}/{Inventory.userInventory.MaxAmmo}";
     }
