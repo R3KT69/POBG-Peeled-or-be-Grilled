@@ -9,18 +9,18 @@ EditorBuildSettings:
     path: Assets/Scenes/Connection.unity
     guid: f3278cfad2da0ef4f9e4667eee3592a0
   - enabled: 1
-    path: Assets/Scenes/LobbyScenes/PotatoLobby.unity
+    path: Assets/Scenes/LobbyScenes/PotatoLobbySteam.unity
     guid: f0d027a8d3403d341aa437387eebd9bc
   - enabled: 1
-    path: Assets/Scenes/Main_DM_Asif-Steam 1.unity
+    path: Assets/Scenes/Main_DM_Asif-UDP.unity
     guid: 5a39039bad646784982021cf400499de
   - enabled: 1
     path: Assets/Scenes/Main_DM_Asif-Steam.unity
     guid: ab19d20e3414e5a48b48258c6ffbec89
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main_DM_Asif.unity
     guid: 79af13ae81072d64ebf5137b08d83807
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main_Asif.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:

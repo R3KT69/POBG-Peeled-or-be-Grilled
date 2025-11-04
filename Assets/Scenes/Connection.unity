@@ -2426,8 +2426,8 @@ MonoBehaviour:
   inputField_ipAddress: {fileID: 1317625338}
   inputField_Port: {fileID: 1766466095}
   inputField_playerName: {fileID: 246679003}
-  sceneNameWAN: Main_DM_Asif
-  lobbyScene: PotatoLobby
+  sceneNameWAN: Main_DM_Asif-UDP
+  lobbyScene: PotatoLobbySteam
   text: {fileID: 1772448439}
 --- !u!1 &1174781726
 GameObject:

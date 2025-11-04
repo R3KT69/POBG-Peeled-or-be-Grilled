@@ -30,11 +30,10 @@ public class PlayerMovementNet : NetworkIdentity
     private readonly Collider[] groundHits = new Collider[4];
     public float normalizedVelocity { get; private set; }
     private bool cursorLocked = true;
+    public SyncVar<bool> isGrounded_network = new(initialValue: true);
 
-
-    void Start()
+    void Awake()
     {
-        if (!isOwner) return;
         inputField = GameObject.Find("Input")?.GetComponent<TMP_InputField>();
         characterController = GetComponent<CharacterController>();
         cameraTransform = gameObject.GetComponentInChildren<Camera>().transform;
@@ -48,7 +47,7 @@ public class PlayerMovementNet : NetworkIdentity
         if (!isOwner) return;
 
         //HandleMouseRotation();
-        
+
         //if (inputField != null && inputField.isFocused) return;
 
         if (Input.GetKeyDown(KeyCode.T))
@@ -58,7 +57,7 @@ public class PlayerMovementNet : NetworkIdentity
             Cursor.visible = !cursorLocked;
         }
 
-        
+
         float moveHorizontal, moveVertical;
 
         GroundCheck();
@@ -67,21 +66,29 @@ public class PlayerMovementNet : NetworkIdentity
         Movement(out moveHorizontal, out moveVertical);
 
         // Jump
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded) velocityVector.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            velocityVector.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+
+        }
 
         // Mouse rotation
-        
+
 
         // Animation Part
         float inputMagnitude = new Vector2(moveHorizontal, moveVertical).magnitude;
         normalizedVelocity = Mathf.Clamp01(inputMagnitude); // 0 = idle, 1 = full input
         if (animator != null) animator.SetFloat("Velocity", normalizedVelocity);
 
+
+        // Currently runs only local, so player keeps running on air on network, need to fix this.    
         float targetWeight = isGrounded ? 0f : 1f;
         float currentWeight = animator.GetLayerWeight(2);
         float newWeight = Mathf.Lerp(currentWeight, targetWeight, Time.deltaTime * 5);
         animator.SetLayerWeight(2, newWeight);
     }
+    
+    
 
     bool GroundCheckDriver(Transform feetTransformR, Transform feetTransformL, float sphereRadius, LayerMask groundMask)
     {

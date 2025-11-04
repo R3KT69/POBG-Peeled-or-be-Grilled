@@ -7,18 +7,20 @@ public class PlayerShootingNet : NetworkIdentity
     public Transform shootPoint;
     public GameObject bulletProjLocal, bulletProjObserver;
     public PlayerInventoryNet Inventory;
+    public PlayerProfileNet playerProfileNet;
     public SendMsgNet sendMsgNet;
     public PlayerHud playerHud;
     public GameObject reloadIndicator;
     public float reloadTime = 10f; // seconds
     private bool canShoot = true;
 
-    void Start()
+    void Awake()
     {
-        if (!isOwner) return;
-
         Inventory = GetComponent<PlayerInventoryNet>();
+        playerProfileNet = GetComponent<PlayerProfileNet>();
         sendMsgNet = GetComponent<SendMsgNet>();
+
+        // Truely Local, uses scene UI
         playerHud = GameObject.Find("PlayerHud").GetComponent<PlayerHud>();
         reloadIndicator = GameObject.Find("Reload");
         reloadIndicator.SetActive(false);
@@ -26,6 +28,25 @@ public class PlayerShootingNet : NetworkIdentity
         playerHud.weaponimage.sprite = Inventory.userInventory.weaponIcon;
         UpdateAmmo();
     }
+
+    /*
+    void Start()
+    {
+        
+        if (!isOwner) return;
+
+        Inventory = GetComponent<PlayerInventoryNet>();
+        playerProfileNet = GetComponent<PlayerProfileNet>();
+        sendMsgNet = GetComponent<SendMsgNet>();
+
+        // Truely Local, uses scene UI
+        playerHud = GameObject.Find("PlayerHud").GetComponent<PlayerHud>();
+        reloadIndicator = GameObject.Find("Reload");
+        reloadIndicator.SetActive(false);
+        playerHud.weaponName.text = $"{Inventory.userInventory.CurrentWeapon}";
+        playerHud.weaponimage.sprite = Inventory.userInventory.weaponIcon;
+        UpdateAmmo();
+    }*/
 
     void Update()
     {
@@ -39,7 +60,7 @@ public class PlayerShootingNet : NetworkIdentity
         {
             if (Inventory.userInventory.CurrentAmmo > 0)
             {
-                ShootBullet_ServerRpc();
+                ShootBullet_ServerRpc(Inventory.userInventory.range);
                 ShootBullet_Local();
             }
             else
@@ -65,14 +86,17 @@ public class PlayerShootingNet : NetworkIdentity
     
 
     [ServerRpc] // runs on the server
-    private void ShootBullet_ServerRpc()
+    private void ShootBullet_ServerRpc(float range)
     {
         var bullet = Instantiate(bulletProjObserver, shootPoint.position, shootPoint.rotation);
 
         if (bullet.TryGetComponent(out Rigidbody rb))
         {
-            rb.linearVelocity = shootPoint.forward * Inventory.userInventory.range;
+            Debug.Log(range);
+            rb.linearVelocity = shootPoint.forward * range;
         }
+
+        
     }
 
     private void ShootBullet_Local()
