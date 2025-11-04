@@ -11,8 +11,14 @@ public class PlayerShootingNet : NetworkIdentity
     public SendMsgNet sendMsgNet;
     public PlayerHud playerHud;
     public GameObject reloadIndicator;
+    public GameObject target;
+    public float fireRate = 0.2f; // seconds between shots
+    private float nextFireTime = 0f;
     public float reloadTime = 10f; // seconds
     private bool canShoot = true;
+    public float holdDuration = 2f; // seconds to reach full
+    private float holdTime = 0f;
+    private bool isHolding = false;
 
     void Awake()
     {
@@ -20,7 +26,22 @@ public class PlayerShootingNet : NetworkIdentity
         playerProfileNet = GetComponent<PlayerProfileNet>();
         sendMsgNet = GetComponent<SendMsgNet>();
 
-        // Truely Local, uses scene UI
+        /*/ Truely Local, uses scene UI
+        playerHud = GameObject.Find("PlayerHud").GetComponent<PlayerHud>();
+        reloadIndicator = GameObject.Find("Reload");
+        reloadIndicator.SetActive(false);
+        playerHud.weaponName.text = $"{Inventory.userInventory.CurrentWeapon}";
+        playerHud.weaponimage.sprite = Inventory.userInventory.weaponIcon;
+        UpdateAmmo();*/
+    }
+
+    void Start()
+    {
+        if (!isOwner)
+        {
+            target.SetActive(false);
+            return;
+        }
         playerHud = GameObject.Find("PlayerHud").GetComponent<PlayerHud>();
         reloadIndicator = GameObject.Find("Reload");
         reloadIndicator.SetActive(false);
@@ -48,6 +69,55 @@ public class PlayerShootingNet : NetworkIdentity
         UpdateAmmo();
     }*/
 
+    void ShootInstant(float modifier = 1)
+    {
+        ShootBullet_ServerRpc(Inventory.userInventory.range * modifier);
+        ShootBullet_Local(Inventory.userInventory.range * modifier);
+        Inventory.currentWeapon.FireWeaponVisual();
+        Inventory.currentWeapon.PlayerWepSound();
+    }
+
+    void ShootStrength()
+    {
+        if (Input.GetMouseButton(0) && canShoot)
+        {
+            isHolding = true;
+            holdTime += Time.deltaTime;
+            holdTime = Mathf.Clamp(holdTime, 0f, holdDuration);
+        }
+
+        // Trigger action when released
+        if (Input.GetMouseButtonUp(0))
+        {
+            isHolding = false;
+            OnHoldReleased();
+            holdTime = 0f; // reset or leave to drain gradually
+        }
+
+        // Gradually drain if not holding
+        if (!Input.GetMouseButton(0))
+        {
+            holdTime -= Time.deltaTime * 0.5f; // optional slower drain
+            holdTime = Mathf.Clamp(holdTime, 0f, holdDuration);
+        }
+
+        // Update UI bar
+        if (playerHud != null && playerHud.StrengthBar != null)
+        {
+            playerHud.StrengthBar.fillAmount = holdTime / holdDuration;
+        }
+    }
+    
+    void OnHoldReleased()
+    {
+        float strength = GetStrengthNormalized();
+        Debug.Log($"Released! Strength = {strength}");
+
+        ShootInstant(strength);
+        // Example: fire a charged shot based on strength
+        
+    }
+
     void Update()
     {
         // Only the local player should trigger shooting input
@@ -56,19 +126,33 @@ public class PlayerShootingNet : NetworkIdentity
         if (Input.GetKeyDown(KeyCode.B))
             Debug.Log($"TimeScale = {Time.timeScale}");
 
-        if (Input.GetMouseButtonDown(0) && canShoot) // Left click
+
+        // Instant Shooting
+        /*
+        if (Input.GetMouseButtonDown(0) && canShoot && Time.time >= nextFireTime) // Left click
         {
             if (Inventory.userInventory.CurrentAmmo > 0)
             {
-                ShootBullet_ServerRpc(Inventory.userInventory.range);
-                ShootBullet_Local();
+                nextFireTime = Time.time + fireRate;
+                ShootInstant();
             }
             else
             {
                 sendMsgNet.SendToLocal("You are out of bullets!");
             }
 
+        }*/
+
+        // Strength Based
+        
+        if (Inventory.userInventory.CurrentAmmo > 0 && canShoot)
+        {
+            ShootStrength();
         }
+        
+        
+        //Debug.Log(holdTime);
+        
 
         if (Input.GetKeyDown(KeyCode.R) && canShoot)
         {
@@ -76,6 +160,11 @@ public class PlayerShootingNet : NetworkIdentity
             StartCoroutine(Reload());
         }
 
+    }
+
+    public float GetStrengthNormalized()
+    {
+        return Mathf.Clamp01(holdTime / holdDuration);
     }
     
     void OnGUI()
@@ -99,20 +188,20 @@ public class PlayerShootingNet : NetworkIdentity
         
     }
 
-    private void ShootBullet_Local()
+    private void ShootBullet_Local(float range)
     {
         var bullet = Instantiate(bulletProjLocal, shootPoint.position, shootPoint.rotation);
 
         if (bullet.TryGetComponent(out Rigidbody rb))
         {
-            rb.linearVelocity = shootPoint.forward * Inventory.userInventory.range;
+            rb.linearVelocity = shootPoint.forward * range;
         }
 
         Inventory.userInventory.CurrentAmmo -= 1;
         UpdateAmmo();
     }
 
-    void UpdateAmmo()
+    public void UpdateAmmo()
     {
         playerHud.weaponAmmoStatus.text = $"{Inventory.userInventory.CurrentAmmo}/{Inventory.userInventory.MaxAmmo}";
     }

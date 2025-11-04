@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponName: PotatoCanon
   weaponSprite: {fileID: 21300000, guid: 504136e17225a8e4eb8425ba608c80db, type: 3}
   damage: 10
-  range: 50
+  range: 100
   magSize: 10
   maxAmmo: 50
+  fireSound: {fileID: 8300000, guid: c23bfffb28a358a49851d0d32e41e95f, type: 3}
