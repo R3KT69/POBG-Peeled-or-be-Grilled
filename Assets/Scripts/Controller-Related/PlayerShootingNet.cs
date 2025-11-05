@@ -179,6 +179,8 @@ public class PlayerShootingNet : NetworkIdentity
     private void ShootBullet_ServerRpc(float range)
     {
         var bullet = Instantiate(bulletProjObserver, shootPoint.position, shootPoint.rotation);
+        BulletSender bulletSender = bullet.GetComponent<BulletSender>();
+        bulletSender.Initialize(owner.Value);
 
         if (bullet.TryGetComponent(out Rigidbody rb))
         {

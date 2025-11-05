@@ -10,7 +10,7 @@ public class MatchManager : NetworkIdentity
     public void AddPlayer(PlayerProfileNet player)
     {
         connectedPlayers.Add(player);
-        Debug.Log($"Player name:{player.Player_Name} id:{player.GetComponent<NetworkIdentity>().owner.Value} joined lobby.");
+        Debug.Log($"Player name:{player.playerInfo.name} id:{player.GetComponent<NetworkIdentity>().owner.Value} joined lobby.");
     }
 
     void Start()

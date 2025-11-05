@@ -26,10 +26,19 @@ public class PlayerCollisionNet : NetworkIdentity
 
         if (other.CompareTag("Bullet"))
         {
-            Debug.Log($"Player {playerProfile.name_text.text} got hit by {other.name}");
+            var bullet = other.GetComponent<BulletSender>();
+            
+            // Get shooter via PlayerIdentity
+            if (PlayerProfileNet.TryGetPlayer(bullet.ShooterId, out var shooter))
+            {
+                shooter.playerInfo.score += 10;
+                Debug.Log($"Score given to: {shooter.playerInfo.name}");
+            }
+
+            // Apply damage to this player
             playerProfile.TakeDamage(10);
         }
+
     }
-        
     
 }

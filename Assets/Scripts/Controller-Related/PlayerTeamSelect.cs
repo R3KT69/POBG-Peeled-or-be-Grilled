@@ -55,7 +55,7 @@ public class PlayerTeamSelect : NetworkIdentity
 
         NetworkIdentity playerObj = Instantiate(prefab, spawn.position, spawn.rotation);
         PlayerProfileNet playerProfileNet = playerObj.GetComponent<PlayerProfileNet>();
-        playerProfileNet.Player_team = team;
+        playerProfileNet.playerInfo.teamName = team;
         playerObj.GiveOwnership(playerId);
 
         TargetHideUI(playerId);
