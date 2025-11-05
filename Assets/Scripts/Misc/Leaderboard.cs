@@ -13,6 +13,10 @@ public class Leaderboard : NetworkIdentity
     protected override void OnSpawned()
     {
         base.OnSpawned();
+        if (!isServer)
+        {
+            return;
+        }
         StartCoroutine(UpdateLeaderboard());
     }
 
@@ -36,7 +40,7 @@ public class Leaderboard : NetworkIdentity
         message = "";
         for (int i = 0; i < matchManager.connectedPlayers.Count; i++)
         {
-            message += $"{i + 1}. {matchManager.connectedPlayers[i].Player_Name}\n";
+            message += $"{i + 1}. {matchManager.connectedPlayers[i].Player_Name} - Team {matchManager.connectedPlayers[i].Player_team}\n";
             Debug.Log(message);
         }
     }

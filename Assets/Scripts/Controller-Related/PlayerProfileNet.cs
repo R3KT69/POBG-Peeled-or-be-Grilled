@@ -14,10 +14,11 @@ public class PlayerProfileNet : NetworkIdentity
     public SyncVar<int> health = new(initialValue: 100);
 
     public NetworkIdentity networkIdentity;
-    public NetworkManager networkManager;
+    public NetworkManager playerNetworkManager;
     public PlayerNameplate playerNameplate;
     public SendMsgNet sendMsgNet;
     public MatchManager matchManager;
+    public string Player_team = "none";
     
 
     private void Awake()
@@ -25,7 +26,7 @@ public class PlayerProfileNet : NetworkIdentity
         health.onChanged += OnHealthChanged;
         networkIdentity = GetComponent<NetworkIdentity>();
         sendMsgNet = GetComponent<SendMsgNet>();
-        networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+        playerNetworkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
         matchManager = GameObject.Find("MatchManager").GetComponent<MatchManager>();
         playerNameplate = GetComponentInChildren<PlayerNameplate>();
     }
@@ -77,6 +78,12 @@ public class PlayerProfileNet : NetworkIdentity
 
     void Start()
     {
+        if (isOwner)
+        {
+            GameObject matchCam = GameObject.Find("MatchCamera");
+            matchCam.SetActive(false);
+        }
+        
         /*
         Player_Name = SteamFriends.GetPersonaName();
         SetPlayerName(Player_Name);

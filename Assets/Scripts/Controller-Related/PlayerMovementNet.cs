@@ -39,6 +39,16 @@ public class PlayerMovementNet : NetworkIdentity
         cameraTransform = gameObject.GetComponentInChildren<Camera>().transform;
         animator = GetComponentInChildren<Animator>();
         yaw = transform.eulerAngles.y;
+
+    }
+
+    void Start()
+    {
+        if (!isOwner)
+        {
+            return;
+        }
+
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -49,7 +59,8 @@ public class PlayerMovementNet : NetworkIdentity
         //HandleMouseRotation();
 
         //if (inputField != null && inputField.isFocused) return;
-
+        
+        
         if (Input.GetKeyDown(KeyCode.T))
         {
             cursorLocked = !cursorLocked;

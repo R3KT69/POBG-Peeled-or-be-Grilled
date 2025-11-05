@@ -7,8 +7,8 @@ public class PlayerNameplate : NetworkIdentity
     [Header("References")]
    
     public Transform cameraTarget; // usually your local camera
-
     private PlayerProfileNet profile;
+    private bool cameraAssigned = false;
 
     void Awake()
     {
@@ -33,29 +33,31 @@ public class PlayerNameplate : NetworkIdentity
         //nameText.text = profile.Player_Name;
         //healthText.text = profile.health.value.ToString();
         //profile.health.onChanged += OnHealthChanged;
-    }
-
-    protected override void OnSpawned()
-    {
-        base.OnSpawned();
-
-        GameObject cam = GameObject.FindGameObjectWithTag("MainCamera");
-        cameraTarget = cam.transform;
+        
     }
 
     void LateUpdate()
     {
-        if (cameraTarget == null) return;
+        if (!cameraAssigned)
+        {
+            GameObject cam = GameObject.FindGameObjectWithTag("MainCamera");
+            if (cam != null)
+            {
+                cameraTarget = cam.transform;
+                cameraAssigned = true; 
+            }
+            else return;
+        }
 
-        // Make the nameplate face the camera
+        // Rotate nameplate toward camera
         Vector3 direction = cameraTarget.position - transform.position;
-        direction.y = 0f; // optional: keep upright
+        direction.y = 0f;
         if (direction.sqrMagnitude > 0.001f)
         {
             transform.rotation = Quaternion.LookRotation(direction);
-            // Fix TMP flipping
             transform.Rotate(0, 180f, 0f);
         }
     }
+
     
 }
