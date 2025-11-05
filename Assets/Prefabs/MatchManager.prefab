@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6522492626587553512}
   - component: {fileID: 4161878229949935856}
+  - component: {fileID: 1404606239969106638}
   m_Layer: 0
   m_Name: MatchManager
   m_TagString: Untagged
@@ -54,3 +55,35 @@ MonoBehaviour:
   _networkRules: {fileID: 0}
   _visitiblityRules: {fileID: 0}
   connectedPlayers: []
+--- !u!114 &1404606239969106638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5075773716693653388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da0fd6d5a03fa5047b97e84e1429abe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isSetup: 0
+  _prefabId: -2147483648
+  _componentIndex: -2147483648
+  _shouldBePooled: 0
+  _parent: {fileID: 0}
+  _invertedPathToNearestParent: 
+  _directChildren: []
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
+  spawnpointsPotato:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  spawnpointsTomato:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  potatoPlayer: {fileID: 5823048965013284536, guid: 8c7251889e1b43f4c8b2b24e76919056, type: 3}
+  tomatoPlayer: {fileID: 5823048965013284536, guid: ee46cc3383c633948924a00de8567f9f, type: 3}
+  teamSelectUI: {fileID: 0}

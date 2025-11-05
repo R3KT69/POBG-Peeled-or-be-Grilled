@@ -4,6 +4,7 @@ using UnityEngine;
 using Steamworks;
 using PurrNet.Steam;
 using PurrNet.Transports;
+using System.Collections;
 
 [System.Serializable]
 public struct PlayerInfo
@@ -132,7 +133,7 @@ public class PlayerProfileNet : PlayerIdentity<PlayerProfileNet>
     }
 
     [ServerRpc]
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, PlayerProfileNet attacker = null)
     {
         health.value -= damage;
 
@@ -151,13 +152,50 @@ public class PlayerProfileNet : PlayerIdentity<PlayerProfileNet>
             health.value = 0;
             ChangeNameplateColor(Color.red);
             Debug.Log("Has Died");
+            
+            // Bug here, while player is freezed, if it gets hit then stats stack up
+            // need to prevent these lines from excecuting after getting hit initially
+            playerInfo.death += 1;
+            attacker.playerInfo.kill += 1;
+            StartCoroutine(RespawnAction());
         }
     }
+
+    private IEnumerator RespawnAction()
+    {
+        yield return new WaitForSeconds(2f);
+
+        if (playerInfo.teamName == "Potato")
+        {
+            RpcRespawn(matchManager.GetComponent<PlayerTeamSelect>().spawnpointsPotato[0].position);
+        }
+        else if (playerInfo.teamName == "Tomato")
+        {
+            RpcRespawn(matchManager.GetComponent<PlayerTeamSelect>().spawnpointsTomato[0].position);
+        }
+
+        health.value = 100;
+        ChangeNameplateColor(Color.white);
+
+        Debug.Log("2 seconds have passed!");
+    }
+    
+    [ObserversRpc(bufferLast:true)]
+    void RpcRespawn(Vector3 newPos)
+    {
+        transform.position = newPos;
+    }
+    
 
     [ServerRpc]
     public void GiveHealth(int amount)
     {
         health.value += amount;
+
+        if (health.value >= 30)
+        {
+            ChangeNameplateColor(Color.white);
+        }
 
         if (health.value >= 100)
         {

@@ -13,7 +13,7 @@ public class PlayerMovementNet : NetworkIdentity
     private float yaw;
     public Animator animator; // assign your Animator here
     public Transform cameraTransform;
-
+    private PlayerProfileNet playerProfileNet;
     private TMP_InputField inputField;
     private CharacterController characterController;
 
@@ -36,6 +36,7 @@ public class PlayerMovementNet : NetworkIdentity
     {
         inputField = GameObject.Find("Input")?.GetComponent<TMP_InputField>();
         characterController = GetComponent<CharacterController>();
+        playerProfileNet = GetComponent<PlayerProfileNet>();
         cameraTransform = gameObject.GetComponentInChildren<Camera>().transform;
         animator = GetComponentInChildren<Animator>();
         yaw = transform.eulerAngles.y;
@@ -55,7 +56,12 @@ public class PlayerMovementNet : NetworkIdentity
     void Update()
     {
         if (!isOwner) return;
-
+        Gravity();
+        
+        if (playerProfileNet.health.value <= 0)
+        {
+            return;
+        }
         //HandleMouseRotation();
 
         //if (inputField != null && inputField.isFocused) return;
@@ -72,7 +78,6 @@ public class PlayerMovementNet : NetworkIdentity
         float moveHorizontal, moveVertical;
 
         GroundCheck();
-        Gravity();
         RotatePlayerTowardCamera();
         Movement(out moveHorizontal, out moveVertical);
 

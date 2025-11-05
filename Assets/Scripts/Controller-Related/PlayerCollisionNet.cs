@@ -34,9 +34,9 @@ public class PlayerCollisionNet : NetworkIdentity
                 shooter.playerInfo.score += 10;
                 Debug.Log($"Score given to: {shooter.playerInfo.name}");
             }
-
+            
             // Apply damage to this player
-            playerProfile.TakeDamage(10);
+            playerProfile.TakeDamage(10, shooter);
         }
 
     }

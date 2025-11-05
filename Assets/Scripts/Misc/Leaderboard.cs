@@ -40,7 +40,8 @@ public class Leaderboard : NetworkIdentity
         message = "";
         for (int i = 0; i < matchManager.connectedPlayers.Count; i++)
         {
-            message += $"{i + 1}. {matchManager.connectedPlayers[i].playerInfo.name} - Team {matchManager.connectedPlayers[i].playerInfo.teamName} - Score {matchManager.connectedPlayers[i].playerInfo.score}\n";
+            PlayerInfo pinfo = matchManager.connectedPlayers[i].playerInfo;
+            message += $"{i + 1}. K/D [{pinfo.kill}|{pinfo.death}] | Team {pinfo.teamName} | Score {pinfo.score} | Name: {pinfo.name} |\n";
             //Debug.Log(message);
         }
     }
