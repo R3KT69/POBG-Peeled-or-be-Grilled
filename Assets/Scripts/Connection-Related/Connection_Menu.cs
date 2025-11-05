@@ -23,12 +23,20 @@ public class Connection_Menu : MonoBehaviour
 
     public void Start_Srv_host()
     {
+        if (string.IsNullOrWhiteSpace(IPAddr))
+        {
+            return;
+        }
         startMode = "Host";
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneNameWAN);
     }
 
     public void Start_Srv_client()
     {
+        if (string.IsNullOrWhiteSpace(IPAddr))
+        {
+            return;
+        }
         startMode = "Client";
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneNameWAN);
     } 
