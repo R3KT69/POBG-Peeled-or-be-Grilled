@@ -19,7 +19,6 @@ public class PlayerProfileNet : PlayerIdentity<PlayerProfileNet>
 {
     [Header("Player Information")]
     public PlayerInfo playerInfo;
-    //public Color color;
     public TMP_Text health_text, name_text;
     //public string Player_Name;
     public SyncVar<int> health = new(initialValue: 100);
@@ -137,11 +136,34 @@ public class PlayerProfileNet : PlayerIdentity<PlayerProfileNet>
     {
         health.value -= damage;
 
+        if (health.value <= 100)
+        {
+            ChangeNameplateColor(Color.white);
+        }
+
+        if (health.value <= 30)
+        {
+            ChangeNameplateColor(Color.yellow);
+        }
+
         if (health.value <= 0)
         {
             health.value = 0;
             ChangeNameplateColor(Color.red);
             Debug.Log("Has Died");
+        }
+    }
+
+    [ServerRpc]
+    public void GiveHealth(int amount)
+    {
+        health.value += amount;
+
+        if (health.value >= 100)
+        {
+            health.value = 110;
+            ChangeNameplateColor(Color.cyan);
+            Debug.Log("Max Hp");
         }
     }
 
@@ -154,7 +176,7 @@ public class PlayerProfileNet : PlayerIdentity<PlayerProfileNet>
     [ObserversRpc(bufferLast: true)]
     public void ChangeNameplateColor(Color color)
     {
-        name_text.color = color;
+        health_text.color = color;
     }
 
     protected override void OnDestroy()
