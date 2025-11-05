@@ -10,8 +10,9 @@ public class Leaderboard : NetworkIdentity
     public TextMeshPro lbText;
     string message = "";
 
-    void Start()
+    protected override void OnSpawned()
     {
+        base.OnSpawned();
         if (!isServer)
         {
             return;
@@ -25,13 +26,13 @@ public class Leaderboard : NetworkIdentity
         {
             return;
         }
-        /*
+        
         if (Input.GetKeyDown(KeyCode.L))
         {
             UpdateManual();
             lbText.text = message;
             UpdateText(message);
-        }*/
+        }
     }
 
     void UpdateManual()
@@ -39,8 +40,9 @@ public class Leaderboard : NetworkIdentity
         message = "";
         for (int i = 0; i < matchManager.connectedPlayers.Count; i++)
         {
-            message += $"{i + 1}. {matchManager.connectedPlayers[i].Player_Name}\n";
-            Debug.Log(message);
+            PlayerInfo pinfo = matchManager.connectedPlayers[i].playerInfo;
+            message += $"{i + 1}. K/D [{pinfo.kill}|{pinfo.death}] | Team {pinfo.teamName} | Score {pinfo.score} | Name: {pinfo.name} |\n";
+            //Debug.Log(message);
         }
     }
 

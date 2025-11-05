@@ -12,13 +12,14 @@ public class PlayerShootingNet : NetworkIdentity
     public PlayerHud playerHud;
     public GameObject reloadIndicator;
     public GameObject target;
-    public float fireRate = 0.2f; // seconds between shots
-    private float nextFireTime = 0f;
+    //public float fireRate = 0.2f; // seconds between shots
+    //private float nextFireTime = 0f;
     public float reloadTime = 10f; // seconds
     private bool canShoot = true;
     public float holdDuration = 2f; // seconds to reach full
     private float holdTime = 0f;
     private bool isHolding = false;
+   
 
     void Awake()
     {
@@ -178,6 +179,8 @@ public class PlayerShootingNet : NetworkIdentity
     private void ShootBullet_ServerRpc(float range)
     {
         var bullet = Instantiate(bulletProjObserver, shootPoint.position, shootPoint.rotation);
+        BulletSender bulletSender = bullet.GetComponent<BulletSender>();
+        bulletSender.Initialize(owner.Value);
 
         if (bullet.TryGetComponent(out Rigidbody rb))
         {
