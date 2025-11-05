@@ -12,17 +12,26 @@ public class Leaderboard : NetworkIdentity
 
     void Start()
     {
-        //StartCoroutine(UpdateLeaderboard());
+        if (!isServer)
+        {
+            return;
+        }
+        StartCoroutine(UpdateLeaderboard());
     }
 
     void Update()
     {
+        if (!isServer)
+        {
+            return;
+        }
+        /*
         if (Input.GetKeyDown(KeyCode.L))
         {
             UpdateManual();
             lbText.text = message;
             UpdateText(message);
-        }
+        }*/
     }
 
     void UpdateManual()
@@ -39,10 +48,9 @@ public class Leaderboard : NetworkIdentity
     {
         while (true)
         {
-            for (int i = 0; i < matchManager.connectedPlayers.Count; i++)
-            {
-                message += $"{i + 1}. {matchManager.connectedPlayers[i].Player_Name}\n";
-            }
+            UpdateManual();
+            lbText.text = message;
+            UpdateText(message);
 
 
             yield return new WaitForSeconds(1f);

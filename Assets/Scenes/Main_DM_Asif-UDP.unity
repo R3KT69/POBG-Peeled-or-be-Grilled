@@ -15837,9 +15837,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Ranking
-
-'
+  m_text: Players
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 59a93935bad40654c9be6f7abb45daee, type: 2}
   m_sharedMaterial: {fileID: -2112724981512767912, guid: 59a93935bad40654c9be6f7abb45daee, type: 2}
