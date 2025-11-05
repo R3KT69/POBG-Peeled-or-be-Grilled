@@ -1676,7 +1676,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1097, y: -213}
+  m_AnchoredPosition: {x: 1641.6, y: -229.8}
   m_SizeDelta: {x: 320, y: 227}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &867645866
@@ -2634,7 +2634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lobbyManager: {fileID: 1097043115}
-  nextScene: Main_DM_Asif-Steam
+  nextScene: Main_DM_Asif-STM
 --- !u!1 &1101296062
 GameObject:
   m_ObjectHideFlags: 0
@@ -3930,7 +3930,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Vegetable Wars
+  m_text: 'POBG: Peel Or Be Grilled'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 59a93935bad40654c9be6f7abb45daee, type: 2}
   m_sharedMaterial: {fileID: -2112724981512767912, guid: 59a93935bad40654c9be6f7abb45daee, type: 2}
@@ -3957,8 +3957,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 180
-  m_fontSizeBase: 180
+  m_fontSize: 121.5
+  m_fontSizeBase: 121.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

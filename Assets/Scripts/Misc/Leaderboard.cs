@@ -10,12 +10,9 @@ public class Leaderboard : NetworkIdentity
     public TextMeshPro lbText;
     string message = "";
 
-    void Start()
+    protected override void OnSpawned()
     {
-        if (!isServer)
-        {
-            return;
-        }
+        base.OnSpawned();
         StartCoroutine(UpdateLeaderboard());
     }
 
@@ -25,13 +22,13 @@ public class Leaderboard : NetworkIdentity
         {
             return;
         }
-        /*
+        
         if (Input.GetKeyDown(KeyCode.L))
         {
             UpdateManual();
             lbText.text = message;
             UpdateText(message);
-        }*/
+        }
     }
 
     void UpdateManual()
