@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using Steamworks;
 using PurrNet.Steam;
+using PurrNet.Transports;
 
 
 public class PlayerProfileNet : NetworkIdentity
@@ -14,7 +15,9 @@ public class PlayerProfileNet : NetworkIdentity
 
     public NetworkIdentity networkIdentity;
     public NetworkManager networkManager;
+    public PlayerNameplate playerNameplate;
     public SendMsgNet sendMsgNet;
+    public MatchManager matchManager;
     
 
     private void Awake()
@@ -23,21 +26,10 @@ public class PlayerProfileNet : NetworkIdentity
         networkIdentity = GetComponent<NetworkIdentity>();
         sendMsgNet = GetComponent<SendMsgNet>();
         networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
-
+        matchManager = GameObject.Find("MatchManager").GetComponent<MatchManager>();
+        playerNameplate = GetComponentInChildren<PlayerNameplate>();
     }
 
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-
-        health.onChanged -= OnHealthChanged;
-    }
-
-    private void OnHealthChanged(int newValue)
-    {
-        health_text.text = newValue.ToString();
-        //Debug.Log($"Health : {newValue}");
-    }
 
     protected override void OnSpawned() // Runs both on server and all clients.
     {
@@ -52,25 +44,35 @@ public class PlayerProfileNet : NetworkIdentity
             cam.tag = "Untagged";
             return;
         }
+
         cam.gameObject.SetActive(true);
         cam.tag = "MainCamera";
+        playerNameplate.cameraTarget = cam.transform;
 
         if (networkManager.transport is SteamTransport)
         {
-            Player_Name = SteamFriends.GetPersonaName();
-            SetPlayerName(Player_Name);
-            Debug.Log($"Connected: {Player_Name}");
-            sendMsgNet.SendToAll($"{Player_Name} joined the game!");
+            InitializePlayer(SteamFriends.GetPersonaName());
         }
-        // Local object
+        else if (networkManager.transport is UDPTransport)
+        {
+            InitializePlayer(Connection_Menu.PlayerName);
+        }
         else
         {
-            Player_Name = "Guest";
-            SetPlayerName(Player_Name);
-            Debug.Log($"Connected: {Player_Name}");
-            sendMsgNet.SendToAll($"{Player_Name} joined the game!");
+            InitializePlayer("Guest");
         }
-        
+
+        matchManager.AddPlayer(gameObject.GetComponent<PlayerProfileNet>());
+
+    }
+
+    [ObserversRpc(bufferLast: true)]
+    void InitializePlayer(string name)
+    {
+        Player_Name = name;
+        SetPlayerName(Player_Name);
+        Debug.Log($"Connected: {Player_Name}");
+        sendMsgNet.SendToAll($"{Player_Name} joined the game!");
     }
 
     void Start()
@@ -123,7 +125,7 @@ public class PlayerProfileNet : NetworkIdentity
         }
     }
 
-    [ObserversRpc(bufferLast: true)]
+    
     private void SetPlayerName(string name)
     {
         name_text.text = name;
@@ -133,6 +135,19 @@ public class PlayerProfileNet : NetworkIdentity
     public void ChangeNameplateColor(Color color)
     {
         name_text.color = color;
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+
+        health.onChanged -= OnHealthChanged;
+    }
+
+    private void OnHealthChanged(int newValue)
+    {
+        health_text.text = newValue.ToString();
+        //Debug.Log($"Health : {newValue}");
     }
 
 /*

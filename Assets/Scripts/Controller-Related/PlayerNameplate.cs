@@ -5,19 +5,18 @@ using PurrNet;
 public class PlayerNameplate : NetworkIdentity
 {
     [Header("References")]
-    public TMP_Text nameText;
-    public TMP_Text healthText;
-    private Transform cameraTarget; // usually your local camera
+   
+    public Transform cameraTarget; // usually your local camera
 
     private PlayerProfileNet profile;
 
-    void Start()
+    void Awake()
     {
         if (!isOwner)
         {
             return;
         }
-        
+
         // Find the PlayerProfileNet on parent
         profile = GetComponentInParent<PlayerProfileNet>();
         if (profile == null)
@@ -26,15 +25,22 @@ public class PlayerNameplate : NetworkIdentity
             return;
         }
 
-        // Assign the camera if not set
-        if (cameraTarget == null && Camera.main != null)
-            cameraTarget = Camera.main.transform;
 
-        // Initial values
-        nameText.text = profile.name_text.text;
-        healthText.text = profile.health.value.ToString();
+    }
 
-        profile.health.onChanged += OnHealthChanged;
+    void Start()
+    {
+        //nameText.text = profile.Player_Name;
+        //healthText.text = profile.health.value.ToString();
+        //profile.health.onChanged += OnHealthChanged;
+    }
+
+    protected override void OnSpawned()
+    {
+        base.OnSpawned();
+
+        GameObject cam = GameObject.FindGameObjectWithTag("MainCamera");
+        cameraTarget = cam.transform;
     }
 
     void LateUpdate()
@@ -51,12 +57,5 @@ public class PlayerNameplate : NetworkIdentity
             transform.Rotate(0, 180f, 0f);
         }
     }
-
-
-    private void OnHealthChanged(int newHealth)
-    {
-        healthText.text = newHealth.ToString();
-    }
-
     
 }
