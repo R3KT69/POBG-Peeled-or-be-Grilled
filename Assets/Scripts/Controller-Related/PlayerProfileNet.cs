@@ -21,6 +21,7 @@ public class PlayerProfileNet : PlayerIdentity<PlayerProfileNet>
     [Header("Player Information")]
     public PlayerInfo playerInfo;
     public TMP_Text health_text, name_text;
+    public GameObject UI;
     //public string Player_Name;
     public SyncVar<int> health = new(initialValue: 100);
     //public int score;
@@ -38,6 +39,7 @@ public class PlayerProfileNet : PlayerIdentity<PlayerProfileNet>
 
         health.onChanged += OnHealthChanged;
         networkIdentity = GetComponent<NetworkIdentity>();
+        UI = GameObject.Find("UI");
         sendMsgNet = GetComponent<SendMsgNet>();
         playerNetworkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
         matchManager = GameObject.Find("MatchManager").GetComponent<MatchManager>();
@@ -48,6 +50,15 @@ public class PlayerProfileNet : PlayerIdentity<PlayerProfileNet>
     protected override void OnSpawned() // Runs both on server and all clients.
     {
         base.OnSpawned();
+
+        if (playerInfo.teamName == "Potato")
+        {
+            matchManager.potatoTeam.memberCount += 1;
+        } else if (playerInfo.teamName == "Tomato")
+        {
+            matchManager.tomatoTeam.memberCount += 1;
+        }
+        //UI.GetComponent<UI_references>().deathScreen.SetActive(false);
 
         Camera cam = GetComponentInChildren<Camera>();
         if (cam == null) return;
@@ -62,6 +73,7 @@ public class PlayerProfileNet : PlayerIdentity<PlayerProfileNet>
         cam.gameObject.SetActive(true);
         cam.tag = "MainCamera";
         playerNameplate.cameraTarget = cam.transform;
+        
 
         if (networkManager.transport is SteamTransport)
         {
@@ -77,7 +89,6 @@ public class PlayerProfileNet : PlayerIdentity<PlayerProfileNet>
         }
 
         matchManager.AddPlayer(gameObject.GetComponent<PlayerProfileNet>());
-
     }
 
     [ObserversRpc(bufferLast: true)]
@@ -110,10 +121,7 @@ public class PlayerProfileNet : PlayerIdentity<PlayerProfileNet>
         /*-----------Client Specific Codes-----------*/
         if (!isOwner) return;
 
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            TakeDamage(10);
-        }
+        
 
         if (Input.GetKeyDown(KeyCode.I))
         {
@@ -157,14 +165,16 @@ public class PlayerProfileNet : PlayerIdentity<PlayerProfileNet>
             // need to prevent these lines from excecuting after getting hit initially
             playerInfo.death += 1;
             attacker.playerInfo.kill += 1;
-            StartCoroutine(RespawnAction());
+            Debug.Log($"my ID: {owner.Value}");
+            StartCoroutine(RespawnAction(owner.Value));
         }
     }
 
-    private IEnumerator RespawnAction()
+    private IEnumerator RespawnAction(PlayerID target)
     {
+        TriggerDeathScreen(target, true);
         yield return new WaitForSeconds(2f);
-
+        TriggerDeathScreen(target, false);
         if (playerInfo.teamName == "Potato")
         {
             RpcRespawn(matchManager.GetComponent<PlayerTeamSelect>().spawnpointsPotato[0].position);
@@ -179,11 +189,23 @@ public class PlayerProfileNet : PlayerIdentity<PlayerProfileNet>
 
         Debug.Log("2 seconds have passed!");
     }
-    
-    [ObserversRpc(bufferLast:true)]
-    void RpcRespawn(Vector3 newPos)
+
+    [ObserversRpc(bufferLast: true)]
+    public void RpcRespawn(Vector3 newPos)
     {
         transform.position = newPos;
+    }
+
+    [ObserversRpc(bufferLast: true)]
+    public void ShowWinnerScreen(bool state)
+    {
+        UI.GetComponent<UI_references>().winnerScreen.SetActive(state);
+    }
+
+    [TargetRpc]
+    void TriggerDeathScreen(PlayerID target, bool state)
+    {
+        UI.GetComponent<UI_references>().deathScreen.SetActive(state);
     }
     
 

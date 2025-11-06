@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerMisc : MonoBehaviour
 {
     public Animator UI;
-    private bool chatBoxDeployed = false; // starts hidden
+    public bool chatBoxDeployed = false; // starts hidden
 
     void Start()
     {

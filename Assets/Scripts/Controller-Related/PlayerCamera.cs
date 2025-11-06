@@ -46,8 +46,10 @@ public class PlayerCamera : MonoBehaviour
             return;
         }
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        // UNRELIABLE CODE, REDACTED
+        // MONOBEHAVIOUR (LOCAL) LOCKING FOR CURSOR, NO NEED TO LOCK CURSOR ON OTHER SCRIPTS. OTHERWISE EVERY CLIENT GETS LOCKED***
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 
     void Update()
