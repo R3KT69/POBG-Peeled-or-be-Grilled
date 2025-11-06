@@ -16,9 +16,14 @@ public class MatchManager : NetworkIdentity
 
     
     public Team potatoTeam, tomatoTeam;
-
+    public GameObject global_ui;
     public GameObject barrier;
     bool matchStarted = false;
+
+    void Awake()
+    {
+        global_ui = GameObject.Find("UI");
+    }
 
     [ServerRpc]
     public void AddPlayer(PlayerProfileNet player)

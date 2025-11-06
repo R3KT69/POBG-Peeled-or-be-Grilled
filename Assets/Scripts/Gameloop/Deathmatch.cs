@@ -1,6 +1,7 @@
 using PurrNet;
 using TMPro;
 using UnityEngine;
+using System.Collections;
 
 public class Deathmatch : NetworkIdentity
 {
@@ -98,12 +99,14 @@ public class Deathmatch : NetworkIdentity
     [ObserversRpc(bufferLast: true)]
     void TimerEnded()
     {
-        CalculateWinner();
-        
-
+        string winnerMsg;
+        CalculateWinner(out winnerMsg);
+        StartCoroutine(ShowWinner(winnerMsg));
     }
-    
-    void CalculateWinner()
+
+
+
+    void CalculateWinner(out string winnerMsg)
     {
         int team1_score, team2_score;
         for (int i = 0; i < matchManager.potatoTeam.player.Count; i++)
@@ -120,10 +123,45 @@ public class Deathmatch : NetworkIdentity
         if (team1_score > team2_score)
         {
             Debug.Log($"Potato team won with score {team1_score}");
+            winnerMsg = $"Potato team won with score {team1_score}";
+        }
+        else if (team1_score < team2_score)
+        {
+            Debug.Log($"Tomato team won with score {team2_score}");
+            winnerMsg = $"Tomato team won with score {team2_score}";
         }
         else
         {
-            Debug.Log($"Tomato team won with score {team2_score}");
+            Debug.Log($"Draw!");
+            winnerMsg = $"Potato team won with score {team1_score}";
+        }
+
+        ResetAllPositions();
+    }
+    
+    private IEnumerator ShowWinner(string winnerMsg)
+    {
+        matchManager.global_ui.GetComponent<UI_references>().winnerScreen.SetActive(true);
+        matchManager.global_ui.GetComponent<UI_references>().winnerScreen.GetComponent<TextMeshProUGUI>().text = winnerMsg;
+        yield return new WaitForSeconds(2);
+        matchManager.global_ui.GetComponent<UI_references>().winnerScreen.SetActive(false);
+    }
+
+    void ResetAllPositions()
+    {
+        for (int i = 0; i < matchManager.connectedPlayers.Count; i++)
+        {
+            PlayerProfileNet selectedPlayer = matchManager.connectedPlayers[i];
+            if (selectedPlayer.playerInfo.teamName == "Potato")
+            {
+                selectedPlayer.RpcRespawn(matchManager.GetComponent<PlayerTeamSelect>().spawnpointsPotato[0].position);
+            }
+            else if (selectedPlayer.playerInfo.teamName == "Tomato")
+            {
+                selectedPlayer.RpcRespawn(matchManager.GetComponent<PlayerTeamSelect>().spawnpointsTomato[0].position);
+            }
+
         }
     }
+    
 }

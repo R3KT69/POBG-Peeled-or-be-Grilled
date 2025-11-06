@@ -191,9 +191,15 @@ public class PlayerProfileNet : PlayerIdentity<PlayerProfileNet>
     }
 
     [ObserversRpc(bufferLast: true)]
-    void RpcRespawn(Vector3 newPos)
+    public void RpcRespawn(Vector3 newPos)
     {
         transform.position = newPos;
+    }
+
+    [ObserversRpc(bufferLast: true)]
+    public void ShowWinnerScreen(bool state)
+    {
+        UI.GetComponent<UI_references>().winnerScreen.SetActive(state);
     }
 
     [TargetRpc]
