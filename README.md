@@ -36,19 +36,18 @@ Use W - A - S - D to move, Space to Jump, Left Alt to swap shoulders, Right clic
 For Shooting, You have to hold Mouse1 (Left Mouse Btn) to Charge a shot, release to shoot it.
 
 # Pickups
-Ammo Pickup
-<img width="183" height="99" alt="image" src="https://github.com/user-attachments/assets/130f92ff-563f-4ff0-b2e6-f27dcd865df7" /> 
+Ammo Pickup. <br>
+<img width="183" height="99" alt="image" src="https://github.com/user-attachments/assets/130f92ff-563f-4ff0-b2e6-f27dcd865df7" /> <br>
 <img width="222" height="128" alt="image" src="https://github.com/user-attachments/assets/79582c93-fafe-4e1f-a5be-374d267964f3" />
 
-Health Pickup (If your health is 100 already, picking it gives you a boost of 10hp, so total of 110hp)
-<img width="258" height="358" alt="image" src="https://github.com/user-attachments/assets/5e85f5c8-dfff-4c97-bc5c-45b2216ef713" />
+Health Pickup (If your health is 100 already, picking it gives you a boost of 10hp, so total of 110hp) <br>
+<img width="258" height="358" alt="image" src="https://github.com/user-attachments/assets/5e85f5c8-dfff-4c97-bc5c-45b2216ef713" /><br>
 <img width="145" height="69" alt="image" src="https://github.com/user-attachments/assets/3e3c6be1-6c9f-4e9c-9289-b658a4297e33" />
 
 # Chat System (Beta)
-
-I've also included a messaging system, by pressing TAB you can reveal it. Unlock mouse by Pressing T, then click at the input box to send message.
 <img width="412" height="526" alt="image" src="https://github.com/user-attachments/assets/6098dff4-51c6-4885-b541-a67a8597064c" />
 
+I've also included a messaging system, by pressing TAB you can reveal it. Unlock mouse by Pressing T, then click at the input box to send message.
 # Finished (For now)
 I have plans to update this furthur, currently its in a pretty bad shape, many UI bugs and whatsoever, lets see. I would like to add a Battle royale mode to this someway aswell.
 
