@@ -50,4 +50,4 @@ Health Pickup (If your health is 100 already, picking it gives you a boost of 10
 I've also included a messaging system, by pressing TAB you can reveal it. Unlock mouse by Pressing T, then click at the input box to send message.
 # Finished (For now)
 I have plans to update this furthur, currently its in a pretty bad shape, many UI bugs and whatsoever, lets see. I would like to add a Battle royale mode to this someway aswell. Also add new guns, characters, maps (not just limited to potatoes and tomatoes lol).
-
+Download : Check Release Page or click here : https://drive.google.com/file/d/10NiaA0MTEA9KgfMq0G6BtlsI12K41_bd/view?usp=sharing
