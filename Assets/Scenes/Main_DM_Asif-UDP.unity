@@ -15724,7 +15724,7 @@ MonoBehaviour:
   _visitiblityRules: {fileID: 0}
   matchManager: {fileID: 731537428}
   matchTimer: {fileID: 2144593905}
-  startTime: 30
+  startTime: 180
 --- !u!114 &510120578071756086
 MonoBehaviour:
   m_ObjectHideFlags: 0

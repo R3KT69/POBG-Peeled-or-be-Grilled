@@ -101,10 +101,15 @@ public class Deathmatch : NetworkIdentity
     {
         string winnerMsg;
         CalculateWinner(out winnerMsg);
-        StartCoroutine(ShowWinner(winnerMsg));
+        RpcShowWinner(winnerMsg);
     }
 
 
+    [ObserversRpc(bufferLast: true)]
+    void RpcShowWinner(string winnerMsg)
+    {
+        StartCoroutine(ShowWinner(winnerMsg));
+    }
 
     void CalculateWinner(out string winnerMsg)
     {
@@ -138,6 +143,24 @@ public class Deathmatch : NetworkIdentity
 
         ResetAllPositions();
     }
+
+    void RestartMatch()
+    {
+        // Reset scores
+        //matchManager.potatoTeam.score = 0;
+        //matchManager.tomatoTeam.score = 0;
+
+        // Reset timer
+        currentTime = startTime;
+        isRunning = true;
+
+        // Update UI immediately
+        UpdateTimerDisplay();
+        SyncTimer(currentTime);
+
+        // Reset all player positions
+        ResetAllPositions();
+    }
     
     private IEnumerator ShowWinner(string winnerMsg)
     {
@@ -145,6 +168,11 @@ public class Deathmatch : NetworkIdentity
         matchManager.global_ui.GetComponent<UI_references>().winnerScreen.GetComponent<TextMeshProUGUI>().text = winnerMsg;
         yield return new WaitForSeconds(2);
         matchManager.global_ui.GetComponent<UI_references>().winnerScreen.SetActive(false);
+
+        if (isServer)
+        {
+            RestartMatch();
+        }
     }
 
     void ResetAllPositions()
