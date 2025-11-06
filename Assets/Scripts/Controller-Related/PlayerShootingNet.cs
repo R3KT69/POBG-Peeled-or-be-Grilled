@@ -10,6 +10,7 @@ public class PlayerShootingNet : NetworkIdentity
     public PlayerProfileNet playerProfileNet;
     public SendMsgNet sendMsgNet;
     public PlayerHud playerHud;
+    public PlayerMisc playerMisc;
     public GameObject reloadIndicator;
     public GameObject target;
     //public float fireRate = 0.2f; // seconds between shots
@@ -26,6 +27,7 @@ public class PlayerShootingNet : NetworkIdentity
         Inventory = GetComponent<PlayerInventoryNet>();
         playerProfileNet = GetComponent<PlayerProfileNet>();
         sendMsgNet = GetComponent<SendMsgNet>();
+        playerMisc = GetComponent<PlayerMisc>();
 
         /*/ Truely Local, uses scene UI
         playerHud = GameObject.Find("PlayerHud").GetComponent<PlayerHud>();
@@ -144,10 +146,11 @@ public class PlayerShootingNet : NetworkIdentity
 
         }*/
 
-        // Strength Based
+        // Strength Based Shooting
         
         if (Inventory.userInventory.CurrentAmmo > 0 && canShoot)
         {
+            if (playerMisc.chatBoxDeployed) return;
             ShootStrength();
         }
         

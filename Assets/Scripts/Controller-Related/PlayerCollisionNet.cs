@@ -21,7 +21,7 @@ public class PlayerCollisionNet : NetworkIdentity
         if (other.CompareTag("Traps"))
         {
             Debug.Log($"Player {playerProfile.name_text.text} entered trap: {other.gameObject.name}");
-            playerProfile.TakeDamage(10);
+            //playerProfile.TakeDamage(10);
         }
 
         if (other.CompareTag("Bullet"))

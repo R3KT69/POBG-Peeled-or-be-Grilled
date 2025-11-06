@@ -14,6 +14,7 @@ public class PlayerMovementNet : NetworkIdentity
     public Animator animator; // assign your Animator here
     public Transform cameraTransform;
     private PlayerProfileNet playerProfileNet;
+    private PlayerMisc playerMisc;
     private TMP_InputField inputField;
     private CharacterController characterController;
 
@@ -36,6 +37,7 @@ public class PlayerMovementNet : NetworkIdentity
     {
         inputField = GameObject.Find("Input")?.GetComponent<TMP_InputField>();
         characterController = GetComponent<CharacterController>();
+        playerMisc = GetComponent<PlayerMisc>();
         playerProfileNet = GetComponent<PlayerProfileNet>();
         cameraTransform = gameObject.GetComponentInChildren<Camera>().transform;
         animator = GetComponentInChildren<Animator>();
@@ -43,15 +45,6 @@ public class PlayerMovementNet : NetworkIdentity
 
     }
 
-    void Start()
-    {
-        if (!isOwner)
-        {
-            return;
-        }
-
-        Cursor.lockState = CursorLockMode.Locked;
-    }
 
     void Update()
     {
@@ -84,8 +77,8 @@ public class PlayerMovementNet : NetworkIdentity
         // Jump
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
+            if (playerMisc.chatBoxDeployed) return;
             velocityVector.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-
         }
 
         // Mouse rotation
@@ -125,6 +118,12 @@ public class PlayerMovementNet : NetworkIdentity
 
     private void Movement(out float moveHorizontal, out float moveVertical)
     {
+        if (playerMisc.chatBoxDeployed)
+        {
+            moveHorizontal = 0f;
+            moveVertical = 0f;
+            return;
+        }
         moveHorizontal = Input.GetAxis("Horizontal");
         moveVertical = Input.GetAxis("Vertical");
         Vector3 move = transform.right * moveHorizontal + transform.forward * moveVertical;
@@ -171,6 +170,7 @@ public class PlayerMovementNet : NetworkIdentity
 
     public void RotatePlayerTowardCamera()
     {
+        if (playerMisc.chatBoxDeployed) return;
         Vector3 inputDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
         if (inputDir.sqrMagnitude > 0.01f)
