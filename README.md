@@ -51,3 +51,21 @@ I've also included a messaging system, by pressing TAB you can reveal it. Unlock
 # Finished (For now)
 I have plans to update this furthur, currently its in a pretty bad shape, many UI bugs and whatsoever, lets see. I would like to add a Battle royale mode to this someway aswell. Also add new guns, characters, maps (not just limited to potatoes and tomatoes lol).
 Download : Check Release Page or click here : https://drive.google.com/file/d/10NiaA0MTEA9KgfMq0G6BtlsI12K41_bd/view?usp=sharing
+
+# Some Screenshots
+*Moments while waiting for players to join*
+<img width="1920" height="1014" alt="image" src="https://github.com/user-attachments/assets/05223933-2d52-4808-a40f-ecb2bd2cf90a" />
+
+*Score/leaderboard*
+<img width="1919" height="1015" alt="image" src="https://github.com/user-attachments/assets/3ac7f06f-d9ab-4033-bd88-5c7fde255394" />
+<img width="668" height="488" alt="image" src="https://github.com/user-attachments/assets/4064f5ae-8683-45b4-bdaa-9a9963abfad9" />
+<img width="1917" height="884" alt="image" src="https://github.com/user-attachments/assets/60137ed1-3588-414b-a86a-f0f59099d436" />
+
+*Randomized drop lol*
+<img width="1918" height="883" alt="image" src="https://github.com/user-attachments/assets/ad248d12-7109-46d7-8d6e-ad2d542662e3" />
+
+
+
+
+
+
