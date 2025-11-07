@@ -17,7 +17,7 @@ public class MatchManager : NetworkIdentity
     
     public Team potatoTeam, tomatoTeam;
     public GameObject global_ui;
-    public GameObject barrier;
+    public GameObject barrier, airdrop;
     bool matchStarted = false;
 
     void Awake()
@@ -59,6 +59,7 @@ public class MatchManager : NetworkIdentity
         {
             gameObject.GetComponent<Deathmatch>().enabled = true;
             RemoveBarrier(barrier);
+            airdrop.GetComponent<Airdrop>().isGameRunning = true;
             //matchStarted = true;
         }
     }
